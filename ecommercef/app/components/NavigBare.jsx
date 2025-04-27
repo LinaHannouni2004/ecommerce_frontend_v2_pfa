@@ -198,13 +198,16 @@ export default function Example() {
               </div>
 
               <div className="flex items-center justify-center">
-                <PopoverGroup className="hidden lg:flex lg:gap-6">
+                <PopoverGroup className="hidden lg:flex lg:gap-8">
                   {navigation.categories.map((category) => (
                     <Popover key={category.name} className="flex">
                       <div className="relative flex">
                         <PopoverButton
                           className="relative z-10 flex items-center border-b-2 border-transparent pt-px text-white hover:text-gray-300 data-open:border-white"
-                          style={{ fontSize: '1.5em', fontWeight: '200', lineHeight: '1em' }}
+                          style={{  fontSize: '1.1rem',
+                            fontWeight: '300', 
+                            letterSpacing: '0.5px', 
+                            fontFamily: '"SF Pro Display", "Helvetica Neue", sans-serif'  }}
                         >
                           {category.name}
                         </PopoverButton>

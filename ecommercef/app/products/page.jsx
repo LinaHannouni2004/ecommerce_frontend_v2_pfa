@@ -6,6 +6,7 @@ import ProductCard from '../components/Card_Produit/ProductCard';
 import Carousel from '../components/carousel/Carousel'
 import NavigBare from '../components/NavigBare';
 import styles from './module1.css'
+import { use } from 'react';
 const mockProducts = [
   {
     id: 1,

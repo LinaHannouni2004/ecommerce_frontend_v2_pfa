@@ -8,7 +8,7 @@ export default function CartButton() {
   const { itemCount } = useCart();
 
   return (
-    <>
+    <div className="fixed top-4 right-4 z-50">
       <button 
         onClick={() => setIsOpen(true)}
         className="relative p-2 bg-gray-100 rounded-full hover:bg-gray-200"
@@ -22,6 +22,6 @@ export default function CartButton() {
       </button>
       
       {isOpen && <Cart onClose={() => setIsOpen(false)} />}
-    </>
+    </div>
   );
 }

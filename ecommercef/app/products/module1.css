@@ -30,7 +30,7 @@
 }
 
 body {
-    background: linear-gradient( black, #531575);
+    background: linear-gradient( black);
     font-family: 'Poppins', sans-serif;
 }
 
@@ -137,4 +137,7 @@ body {
         width: max-content;
         float: right;
     }
+}
+.bb{
+    background-color: black;
 }

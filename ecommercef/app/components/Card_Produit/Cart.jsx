@@ -1,6 +1,10 @@
 'use client';
+
 import { useCart } from './CartContext';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+
+
 
 export default function Cart({ onClose }) {
   const { cartItems, removeFromCart, updateQuantity } = useCart();
@@ -11,6 +15,14 @@ export default function Cart({ onClose }) {
       0
     ).toFixed(2);
   };
+
+
+  const router = useRouter();
+  const handleCheckout = () => {
+    onClose(); // Ferme le panier
+    router.push('/checkout'); // Redirige vers la page checkout
+  };
+
 
   return (
     <div className="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-50">
@@ -89,8 +101,11 @@ export default function Cart({ onClose }) {
                 <span>Total:</span>
                 <span className="text-blue-600">${calculateTotal()}</span>
               </div>
-              <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-                Passer la commande
+              <button 
+                onClick={handleCheckout} // Ajoutez le gestionnaire onClick
+                className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+              >
+                Passer la commande 
               </button>
             </div>
           </>

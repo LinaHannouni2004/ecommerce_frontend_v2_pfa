@@ -6,7 +6,8 @@ export default function ProductCard({ product }) {
   const inCart = isInCart(product.id);
 
   return (
-    <div className="flex flex-col w-full max-w-xs rounded-xl overflow-hidden">
+<div className="flex flex-col w-full max-w-xs rounded-xl overflow-hidden ml-[30cm]">
+    
       {/* Image + prix avec dégradé */}
       <div className="relative bg-gradient-to-t from-gray-200 to-white p-6 flex justify-center items-center h-80 rounded-t-xl">
         <img

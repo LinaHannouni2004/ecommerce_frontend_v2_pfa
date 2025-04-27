@@ -32,13 +32,15 @@ const navigation = {
           name: 'New Arrivals',
           href: '/new-arrivals',
           imageSrc:
-            'https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-01.jpg',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSOPpEZWs5-aif5n5F7nih-2EJyB9H6s6_bg&s',
+          imageAlt: 'New arrival products'
         },
         {
           name: 'Best Sells',
           href: '/best-sellers',
           imageSrc:
-            'https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-02.jpg',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpHd38Zas18mXcXoqRWzDdzqAKZlVqyqZCkCre8N7BYsHzWli_mb8flP4IBj_NUCfWfHw&usqp=CAU',
+          imageAlt: 'Best selling products'
         },
       ],
       sections: [
@@ -62,15 +64,15 @@ const navigation = {
           name: 'New Arrivals',
           href: '/premium/new-arrivals',
           imageSrc:
-            'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
-          imageAlt:
-            'Drawstring top with elastic loop closure and textured interior padding.',
+            'https://specials-images.forbesimg.com/imageserve/61d8a1eb3a9cf24443034ea8/Asus-Zenbook-17-Fold-OLED/960x0.jpg?fit=scale',
+          imageAlt: 'Premium new arrivals'
         },
         {
           name: 'Best Sells',
           href: '/premium/best-sellers',
           imageSrc:
-            'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-02-image-card-06.jpg',
+            'https://static.wui.fr//photos/319808/zoom-ces-2022--%C2%A010-nouveaut%C3%A9s-fun-et-high-tech-%C3%A0-las-vegas.jpg',
+          imageAlt: 'Premium best sellers'
         },
       ],
       sections: [
@@ -119,7 +121,8 @@ export default function Example() {
                   {navigation.categories.map((category) => (
                     <Tab
                       key={category.name}
-                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-2xl font-bold italic text-white data-selected:border-white data-selected:text-white ml-8"
+                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-white data-selected:border-white data-selected:text-white ml-8"
+                      style={{ fontSize: '2em', fontWeight: '500', lineHeight: '1em' }}
                     >
                       {category.name}
                     </Tab>
@@ -134,12 +137,14 @@ export default function Example() {
                   >
                     <div className="grid grid-cols-2 gap-x-4">
                       {category.featured.map((item) => (
-                        <div key={item.name} className="group relative text-sm">
-                          <img
-                            src={item.imageSrc}
-                            alt=""
-                            className="aspect-square w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
-                          />
+                        <div key={item.name} className="group relative text-sm h-full">
+                          <div className="aspect-square w-full overflow-hidden rounded-lg bg-gray-100">
+                            <img
+                              src={item.imageSrc}
+                              alt={item.imageAlt}
+                              className="h-full w-full object-cover group-hover:opacity-75"
+                            />
+                          </div>
                           <Link href={item.href} className="mt-6 block font-medium text-white">
                             <span aria-hidden="true" className="absolute inset-0 z-10" />
                             {item.name}
@@ -189,8 +194,7 @@ export default function Example() {
           <div className="border-b border-gray-700">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center space-x-6">
-               
-                
+                {/* Logo or other elements can go here */}
               </div>
 
               <div className="flex items-center justify-center">
@@ -198,7 +202,10 @@ export default function Example() {
                   {navigation.categories.map((category) => (
                     <Popover key={category.name} className="flex">
                       <div className="relative flex">
-                        <PopoverButton className="relative z-10 flex items-center border-b-2 border-transparent pt-px text-xl font-bold text-white hover:text-gray-300 data-open:border-white">
+                        <PopoverButton
+                          className="relative z-10 flex items-center border-b-2 border-transparent pt-px text-white hover:text-gray-300 data-open:border-white"
+                          style={{ fontSize: '1.5em', fontWeight: '200', lineHeight: '1em' }}
+                        >
                           {category.name}
                         </PopoverButton>
                       </div>
@@ -211,11 +218,11 @@ export default function Example() {
                               <div className="col-start-2 grid grid-cols-2 gap-x-8">
                                 {category.featured.map((item) => (
                                   <div key={item.name} className="group relative text-base sm:text-sm">
-                                    <div className="aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+                                    <div className="aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75 h-64">
                                       <img
                                         src={item.imageSrc}
-                                        alt=""
-                                        className="object-cover object-center"
+                                        alt={item.imageAlt}
+                                        className="h-full w-full object-cover"
                                       />
                                     </div>
                                     <a href={item.href} className="mt-6 block font-medium text-white">
@@ -264,12 +271,7 @@ export default function Example() {
 
               <div className="flex items-center">
                 <a href="#" className="flex items-center text-gray-300 hover:text-white">
-                  <img
-                    src="https://tailwindcss.com/plus-assets/img/flags/flag-canada.svg"
-                    alt=""
-                    className="block h-auto w-5 flex-shrink-0"
-                  />
-                  <span className="ml-3 block text-sm font-medium">MAR</span>
+                  {/* Shopping bag or other icons can go here */}
                 </a>
               </div>
             </div>

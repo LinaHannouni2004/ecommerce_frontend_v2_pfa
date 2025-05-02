@@ -2,23 +2,13 @@
 import { Fragment, useState } from 'react'
 import Link from 'next/link'
 import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
   Popover,
   PopoverButton,
   PopoverGroup,
   PopoverPanel,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
 } from '@headlessui/react'
 import {
   Bars3Icon,
-  MagnifyingGlassIcon,
-  ShoppingBagIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 
@@ -31,15 +21,13 @@ const navigation = {
         {
           name: 'New Arrivals',
           href: '/new-arrivals',
-          imageSrc:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSOPpEZWs5-aif5n5F7nih-2EJyB9H6s6_bg&s',
+          imageSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSOPpEZWs5-aif5n5F7nih-2EJyB9H6s6_bg&s',
           imageAlt: 'New arrival products'
         },
         {
           name: 'Best Sells',
           href: '/best-sellers',
-          imageSrc:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpHd38Zas18mXcXoqRWzDdzqAKZlVqyqZCkCre8N7BYsHzWli_mb8flP4IBj_NUCfWfHw&usqp=CAU',
+          imageSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpHd38Zas18mXcXoqRWzDdzqAKZlVqyqZCkCre8N7BYsHzWli_mb8flP4IBj_NUCfWfHw&usqp=CAU',
           imageAlt: 'Best selling products'
         },
       ],
@@ -63,15 +51,13 @@ const navigation = {
         {
           name: 'New Arrivals',
           href: '/premium/new-arrivals',
-          imageSrc:
-            'https://specials-images.forbesimg.com/imageserve/61d8a1eb3a9cf24443034ea8/Asus-Zenbook-17-Fold-OLED/960x0.jpg?fit=scale',
+          imageSrc: 'https://specials-images.forbesimg.com/imageserve/61d8a1eb3a9cf24443034ea8/Asus-Zenbook-17-Fold-OLED/960x0.jpg?fit=scale',
           imageAlt: 'Premium new arrivals'
         },
         {
           name: 'Best Sells',
           href: '/premium/best-sellers',
-          imageSrc:
-            'https://static.wui.fr//photos/319808/zoom-ces-2022--%C2%A010-nouveaut%C3%A9s-fun-et-high-tech-%C3%A0-las-vegas.jpg',
+          imageSrc: 'https://static.wui.fr//photos/319808/zoom-ces-2022--%C2%A010-nouveaut%C3%A9s-fun-et-high-tech-%C3%A0-las-vegas.jpg',
           imageAlt: 'Premium best sellers'
         },
       ],
@@ -96,186 +82,109 @@ const navigation = {
 }
 
 export default function Example() {
-  const [open, setOpen] = useState(false)
+  const [cartCount, setCartCount] = useState(0)
+  const [activeNav, setActiveNav] = useState('')
+
+  const addToCart = () => {
+    setCartCount(prev => prev + 1)
+  }
+
+  const handleNavClick = (navItem) => {
+    setActiveNav(navItem)
+  }
 
   return (
     <div className="bg-black">
-      <Dialog open={open} onClose={setOpen} className="relative z-[1000] lg:hidden">
-        <DialogBackdrop className="fixed inset-0 bg-black/25" />
-        <div className="fixed inset-0 z-40 flex">
-          <DialogPanel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-black pb-12 shadow-xl z-[1001]">
-            <div className="flex px-4 pt-5 pb-2">
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
-              >
-                <span className="sr-only">Close menu</span>
-                <XMarkIcon className="size-6" />
-              </button>
-            </div>
-
-            <TabGroup className="mt-2">
-              <div className="border-b border-gray-700">
-                <TabList className="-mb-px flex space-x-8 px-4">
-                  {navigation.categories.map((category) => (
-                    <Tab
-                      key={category.name}
-                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-white data-selected:border-white data-selected:text-white ml-8"
-                      style={{ fontSize: '2em', fontWeight: '500', lineHeight: '1em' }}
-                    >
-                      {category.name}
-                    </Tab>
-                  ))}
-                </TabList>
-              </div>
-              <TabPanels as={Fragment}>
-                {navigation.categories.map((category) => (
-                  <TabPanel
-                    key={category.name}
-                    className="space-y-10 px-4 pt-10 pb-8"
-                  >
-                    <div className="grid grid-cols-2 gap-x-4">
-                      {category.featured.map((item) => (
-                        <div key={item.name} className="group relative text-sm h-full">
-                          <div className="aspect-square w-full overflow-hidden rounded-lg bg-gray-100">
-                            <img
-                              src={item.imageSrc}
-                              alt={item.imageAlt}
-                              className="h-full w-full object-cover group-hover:opacity-75"
-                            />
-                          </div>
-                          <Link href={item.href} className="mt-6 block font-medium text-white">
-                            <span aria-hidden="true" className="absolute inset-0 z-10" />
-                            {item.name}
-                          </Link>
-                          <p aria-hidden="true" className="mt-1 text-gray-300">
-                            Shop now
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                    {category.sections.map((section) => (
-                      <div key={section.name}>
-                        <p className="font-bold italic text-white text-xl">
-                          {section.name}
-                        </p>
-                        <ul className="mt-6 flex flex-col space-y-6 items-center">
-                          {section.items.map((item) => (
-                            <li key={item.name} className="flow-root text-center">
-                              <a href={item.href} className="-m-2 block p-2 text-gray-300 text-lg italic">
-                                {item.name}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </TabPanel>
-                ))}
-              </TabPanels>
-            </TabGroup>
-
-            <div className="space-y-12 border-t border-gray-700 px-6 py-8">
-              {navigation.pages.map((page) => (
-                <div key={page.name} className="flow-root">
-                  <Link href={page.href} className="-m-2 block p-2 font-medium text-white">
-                    {page.name}
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </DialogPanel>
-        </div>
-      </Dialog>
-
       <header className="relative bg-black">
-        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-b border-gray-700">
-            <div className="flex h-16 items-center justify-between">
-              <div className="flex items-center space-x-6">
-                {/* Logo or other elements can go here */}
-              </div>
+            <div className="flex h-16 items-center justify-center">
+              {/* Menu hamburger supprimé ici */}
 
-              <div className="flex items-center justify-center">
-                <PopoverGroup className="hidden lg:flex lg:gap-8">
-                  {navigation.categories.map((category) => (
-                    <Popover key={category.name} className="flex">
-                      <div className="relative flex">
-                        <PopoverButton
-                          className="relative z-10 flex items-center border-b-2 border-transparent pt-px text-white hover:text-gray-300 data-open:border-white"
-                          style={{  fontSize: '1.1rem',
-                            fontWeight: '300', 
-                            letterSpacing: '0.5px', 
-                            fontFamily: '"SF Pro Display", "Helvetica Neue", sans-serif'  }}
-                        >
-                          {category.name}
-                        </PopoverButton>
-                      </div>
+              {/* Navigation principale */}
+              <PopoverGroup className="hidden lg:flex lg:gap-x-8">
+                {navigation.categories.map((category) => (
+                  <Popover key={category.name} className="flex">
+                    <div className="relative flex">
+                      <PopoverButton 
+                        className={`relative z-10 flex items-center pt-px text-sm font-medium ${activeNav === category.name ? 'text-white' : 'text-gray-400'} hover:text-white transition-colors`}
+                        onClick={() => handleNavClick(category.name)}
+                      >
+                        {category.name}
+                      </PopoverButton>
+                    </div>
 
-                      <PopoverPanel className="absolute z-10 inset-x-0 top-full text-sm text-white">
-                        <div className="absolute inset-0 top-1/2 bg-black shadow" aria-hidden="true" />
-                        <div className="relative bg-black">
-                          <div className="mx-auto max-w-7xl px-8">
-                            <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
-                              <div className="col-start-2 grid grid-cols-2 gap-x-8">
-                                {category.featured.map((item) => (
-                                  <div key={item.name} className="group relative text-base sm:text-sm">
-                                    <div className="aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75 h-64">
-                                      <img
-                                        src={item.imageSrc}
-                                        alt={item.imageAlt}
-                                        className="h-full w-full object-cover"
-                                      />
-                                    </div>
-                                    <a href={item.href} className="mt-6 block font-medium text-white">
-                                      <span className="absolute inset-0 z-10" aria-hidden="true" />
-                                      {item.name}
-                                    </a>
-                                    <p className="text-gray-300">Shop now</p>
-                                  </div>
-                                ))}
-                              </div>
-                              <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
-                                {category.sections.map((section) => (
-                                  <div key={section.name}>
-                                    <p className="font-bold italic text-white text-xl">
-                                      {section.name}
-                                    </p>
-                                    <ul className="mt-6 space-y-6 sm:space-y-4 flex flex-col items-center">
-                                      {section.items.map((item) => (
-                                        <li key={item.name} className="flex justify-center">
-                                          <a href={item.href} className="hover:text-white text-gray-300 text-lg italic">
-                                            {item.name}
-                                          </a>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                ))}
-                              </div>
+                    <PopoverPanel className="absolute inset-x-0 top-full text-sm text-gray-400 z-50">
+                      <div className="absolute inset-0 top-1/2 bg-black shadow-sm" />
+                      <div className="relative bg-black">
+                        <div className="mx-auto max-w-7xl px-8">
+                          <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
+                            <div className="col-start-2 grid grid-cols-2 gap-x-8">
+                              {category.featured.map((item) => (
+                                <div key={item.name} className="group relative text-base sm:text-sm">
+                                  <img
+                                    alt={item.imageAlt}
+                                    src={item.imageSrc}
+                                    className="aspect-square w-full rounded-lg bg-gray-800 object-cover group-hover:opacity-75"
+                                  />
+                                  <Link 
+                                    href={item.href} 
+                                    className="mt-6 block font-medium text-white"
+                                    onClick={addToCart}
+                                  >
+                                    {item.name}
+                                  </Link>
+                                  <p className="mt-1 text-gray-400">Shop now</p>
+                                </div>
+                              ))}
+                            </div>
+                            <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
+                              {category.sections.map((section) => (
+                                <div key={section.name}>
+                                  <p className="font-medium text-white">{section.name}</p>
+                                  <ul className="mt-6 space-y-6">
+                                    {section.items.map((item) => (
+                                      <li key={item.name} className="flow-root">
+                                        <Link 
+                                          href={item.href} 
+                                          className="-m-2 block p-2 text-gray-400 hover:text-white"
+                                          onClick={addToCart}
+                                        >
+                                          {item.name}
+                                        </Link>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ))}
                             </div>
                           </div>
                         </div>
-                      </PopoverPanel>
-                    </Popover>
-                  ))}
-                  {navigation.pages.map((page) => (
-                    <a
-                      key={page.name}
-                      href={page.href}
-                      className="flex items-center text-xl font-bold text-white hover:text-gray-300"
-                    >
-                      {page.name}
-                    </a>
-                  ))}
-                </PopoverGroup>
-              </div>
+                      </div>
+                    </PopoverPanel>
+                  </Popover>
+                ))}
+
+                {navigation.pages.map((page) => (
+                  <Link
+                    key={page.name}
+                    href={page.href}
+                    className={`text-sm font-medium ${activeNav === page.name ? 'text-white' : 'text-gray-400'} hover:text-white transition-colors`}
+                    onClick={() => handleNavClick(page.name)}
+                  >
+                    {page.name}
+                  </Link>
+                ))}
+              </PopoverGroup>
 
               <div className="flex items-center">
-                <a href="#" className="flex items-center text-gray-300 hover:text-white">
-                  {/* Shopping bag or other icons can go here */}
-                </a>
+                {/* Panier avec compteur */}
+                <button 
+                  onClick={addToCart}
+                  className="ml-4 p-2 text-gray-400 hover:text-white transition-colors"
+                >
+                  <span className="text-sm font-medium">{cartCount > 0 ? cartCount : ''}</span>
+                </button>
               </div>
             </div>
           </div>

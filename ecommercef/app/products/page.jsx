@@ -10,32 +10,52 @@ import { use } from 'react';
 const mockProducts = [
   {
     id: 1,
-    name: "Appareil Photo Canon EOS R5",
-    price: 3899.99,
-    image: "/images/camerasony.jpg",
-    category: "Photographie"
+    name: "Apple iMac 27\", 1TB HDD, Retina 5K Display, M3 Max",
+    price: 1699,
+    discount: "Up to 35% off",
+    rating: 5.0,
+    reviews: 455,
+    delivery: "Fast Delivery",
+    priceTag: "Best Price",
+    image: "https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg",
+    category: "Computers"
   },
   {
     id: 2,
-    name: "MacBook Pro 16\" M2 Max",
-    price: 3499.99,
-    image: "/images/camerasony.jpg",
-    category: "Informatique"
+    name: "Apple iPhone 15 Pro Max, 256GB, Blue Titanium",
+    price: 1199,
+    discount: "Up to 15% off",
+    rating: 4.9,
+    reviews: 1233,
+    delivery: "Best Seller",
+    priceTag: "Best Price",
+    image: "https://flowbite.s3.amazonaws.com/blocks/e-commerce/iphone-dark.svg",
+    category: "Phones"
   },
   {
     id: 3,
-    name: "Casque Sony WH-1000XM5",
-    price: 399.99,
-    image: "/images/camerasony.jpg",
-    category: "Audio"
+    name: "iPad Pro 13-Inch (M4): XDR Display, 512GB",
+    price: 799,
+    discount: "Up to 35% off",
+    rating: 4.9,
+    reviews: 879,
+    delivery: "Shipping Today",
+    priceTag: "Best Price",
+    image: "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ipad-dark.svg",
+    category: "Tablets"
   },
   {
     id: 4,
-    name: "Casque Sony WH-1000XM5",
-    price: 399.99,
-    image: "/images/camerasony.jpg",
-    category: "Audio"
-  },
+    name: "PlayStation®5 Console - 1TB, PRO Controller",
+    price: 499,
+    discount: "Up to 10% off",
+    rating: 4.8,
+    reviews: 2957,
+    delivery: "Fast Delivery",
+    priceTag: "Best Price",
+    image: "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ps5-dark.svg",
+    category: "Gaming"
+  }
 ];
 
 export default function ProductsPage() {

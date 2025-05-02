@@ -76,8 +76,8 @@ const Carousel = () => {
         className="arrows" 
         style={{ 
           position: 'absolute', 
-          bottom: '10px', 
-          width: '1140px', 
+          bottom: '175px',
+                    width: '1140px', 
           maxWidth: '90%', 
           display: 'flex', 
           justifyContent: 'space-between', 
@@ -85,20 +85,28 @@ const Carousel = () => {
           transform: 'translateX(-50%)' 
         }}
       >
+        
         <button 
           id="prev" 
           onClick={() => showSlider('prev')}
           style={{ 
-            width: '40px', 
-            height: '40px', 
+            width: '50px', 
+            height: '50px', 
             borderRadius: '50%', 
-            fontFamily: 'monospace', 
-            border: '1px solid rgba(85, 85, 85, 0.5)', 
-            fontSize: 'large', 
-            bottom: '20%', 
-            left: '10%',
-            cursor: 'pointer'
+            background: 'rgba(0, 0, 0, 0.5)',
+            color: 'white',
+            border: 'none',
+            fontSize: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            opacity: showDetail ? 0 : 1,
+            pointerEvents: showDetail ? 'none' : 'auto'
           }}
+          onMouseEnter={(e) => e.target.style.background = 'rgba(0, 0, 0, 0.8)'}
+          onMouseLeave={(e) => e.target.style.background = 'rgba(0, 0, 0, 0.5)'}
         >
           &lt;
         </button>
@@ -107,16 +115,23 @@ const Carousel = () => {
           id="next" 
           onClick={() => showSlider('next')}
           style={{ 
-            width: '40px', 
-            height: '40px', 
+            width: '50px', 
+            height: '50px', 
             borderRadius: '50%', 
-            fontFamily: 'monospace', 
-            border: '1px solid rgba(85, 85, 85, 0.5)', 
-            fontSize: 'large', 
-            bottom: '20%', 
-            right: '10%',
-            cursor: 'pointer'
+            background: 'rgba(0, 0, 0, 0.5)',
+            color: 'white',
+            border: 'none',
+            fontSize: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            opacity: showDetail ? 0 : 1,
+            pointerEvents: showDetail ? 'none' : 'auto'
           }}
+          onMouseEnter={(e) => e.target.style.background = 'rgba(0, 0, 0, 0.8)'}
+          onMouseLeave={(e) => e.target.style.background = 'rgba(0, 0, 0, 0.5)'}
         >
           &gt;
         </button>

@@ -120,18 +120,24 @@ const CarouselItem = ({ img, position, showDetail, setShowDetail }) => {
       
       {/* Detail section */}
       <div 
-        className="detail" 
-        style={{
-          opacity: position === 2 && showDetail ? 1 : 0,
-          pointerEvents: position === 2 && showDetail ? 'auto' : 'none',
-          width: '50%',
-          position: 'absolute',
-          right: '0',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          textAlign: 'right'
-        }}
-      >
+  className="detail" 
+  style={{
+    opacity: position === 2 && showDetail ? 1 : 0,
+    pointerEvents: position === 2 && showDetail ? 'auto' : 'none',
+    width: '50%',
+    height: '100%', // Ajoutez cette ligne
+    position: 'absolute',
+    right: '0',
+    top: '0', // Changez de '50%' à '0'
+    transform: position === 2 && showDetail ? 'translateY(0)' : 'translateY(-50%)',
+    textAlign: 'right',
+    transition: 'opacity 0.5s, transform 0.5s', // Ajoutez une transition
+    zIndex: showDetail ? 1000 : 15, // Assurez un z-index suffisant
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
+  }}
+>
         <div className="title" style={{ fontSize: '4em' }}>Aerphone GHTK</div>
         <div className="des" style={{ marginTop: '20px' }}>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, reiciendis suscipit nobis nulla animi, modi explicabo quod corrupti impedit illo, accusantium in eaque nam quia adipisci aut distinctio porro eligendi.

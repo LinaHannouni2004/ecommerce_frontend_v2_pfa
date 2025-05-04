@@ -6,6 +6,7 @@ const SearchBar = () => {
   const [selectedCategory, setSelectedCategory] = useState('All categories')
 
   const categories = [
+    {name: 'All categories'},
     { name: 'Smartphones' },
     { name: 'Cameras' },
     { name: 'Smartwatches' },
@@ -22,7 +23,7 @@ const SearchBar = () => {
   }
 
   return (
-    <form className="max-w-lg mx-auto font-sans"> {/* Ajout de font-sans pour la police */}
+    <form className="w-full mx-auto font-sans"> {/* Ajout de font-sans pour la police */}
       <div className="flex">
         <label htmlFor="search-dropdown" className="mb-2 text-sm font-medium text-gray-400 sr-only">
           Search
@@ -33,7 +34,7 @@ const SearchBar = () => {
           id="dropdown-button"
           type="button"
           onClick={toggleDropdown}
-          className="shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-200 bg-gray-800 border border-gray-600 rounded-s-lg hover:bg-gray-700 focus:ring-2 focus:outline-none focus:ring-gray-500"
+          className="shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-200 bg-gray-800 border border-purple-900 rounded-s-lg hover:bg-black-700 focus:ring-2 focus:outline-none focus:ring-black-500"
         >
           {selectedCategory}
           <svg className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -71,7 +72,7 @@ const SearchBar = () => {
           />
           <button
             type="submit"
-            className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-700 rounded-e-lg border border-gray-600 hover:bg-gray-600 focus:ring-2 focus:outline-none focus:ring-gray-500"
+            className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-700 rounded-e-lg border border-purple-600 hover:bg-gray-600 focus:ring-2 focus:outline-none focus:ring-gray-500"
           >
             <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>

@@ -5,6 +5,7 @@ import CartButton from '../components/Card_Produit/CartButton';
 import ProductCard from '../components/Card_Produit/ProductCard'; 
 import Carousel from '../components/carousel/Carousel'
 import NavigBare from '../components/NavigBare';
+import FeaturesSection from '../FeaturesSection';
 import styles from './module1.css'
 import { use } from 'react';
 const mockProducts = [
@@ -129,6 +130,7 @@ export default function ProductsPage() {
     <div>
       <NavigBare />
       <Carousel/>
+      <FeaturesSection />
     <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="relative mb-8">
         <h1 className="text-3xl font-bold text-white text-center">Nos Produits</h1>

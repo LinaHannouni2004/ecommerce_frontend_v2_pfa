@@ -2,7 +2,6 @@
 
 import { useCart } from '../components/Card_Produit/CartContext';
 import { FaTrash } from 'react-icons/fa';
-
 import Image from 'next/image';
 import Link from 'next/link';
 import './style.css';
@@ -10,29 +9,22 @@ import './style.css';
 export default function CartPage() {
   const { cartItems, removeFromCart, updateQuantity } = useCart();
 
-  const calculateSubtotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    ).toFixed(2);
-  };
+  const calculateSubtotal = () =>
+    cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
 
-  const calculateDiscount = () => {
-    const subtotal = parseFloat(calculateSubtotal());
-    return (subtotal * 0.1).toFixed(2);
-  };
+  const calculateDiscount = () =>
+    (parseFloat(calculateSubtotal()) * 0.1).toFixed(2);
 
   const calculateTotal = () => {
     const subtotal = parseFloat(calculateSubtotal());
     const discount = parseFloat(calculateDiscount());
-    const deliveryFee = 50.00;
-    return (subtotal - discount + deliveryFee).toFixed(2);
+    return (subtotal - discount).toFixed(2);
   };
 
   return (
     <div className="cart-container">
       <h1 className="cart-title">Shopping Cart</h1>
-      
+
       <div className="cart-layout">
         {/* Product List */}
         <div className="product-list-container">
@@ -61,6 +53,7 @@ export default function CartPage() {
                     </div>
                     <span className="product-name">{item.name}</span>
                   </div>
+
                   <div className="item-quantity">
                     <div className="quantity-controls">
                       <button
@@ -70,9 +63,7 @@ export default function CartPage() {
                       >
                         -
                       </button>
-                      <span className="quantity-value">
-                        {item.quantity}
-                      </span>
+                      <span className="quantity-value">{item.quantity}</span>
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
                         className="quantity-btn plus"
@@ -81,28 +72,26 @@ export default function CartPage() {
                       </button>
                     </div>
                   </div>
+
                   <div className="item-total">
                     ${(item.price * item.quantity).toFixed(2)}
                   </div>
-                 <div className="item-action">
-  <button
-    onClick={() => removeFromCart(item.id)}
-    className="remove-btn"
-  >
-    <FaTrash />
-  </button>
-</div>
 
+                  <div className="item-action">
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="remove-btn"
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
                 </div>
               ))
             )}
 
-              <Link href="/products">
-                  <button className="update-cart-btn">
-                Update Cart
-                 </button>
-                 </Link>
-
+            <Link href="/products">
+              <button className="update-cart-btn">Update Cart</button>
+            </Link>
           </div>
         </div>
 
@@ -110,17 +99,15 @@ export default function CartPage() {
         <div className="order-summary-container">
           <div className="order-summary">
             <h2 className="summary-title">Order Summary</h2>
-            
+
             <div className="voucher-section">
               <div className="voucher-input-group">
-                <input 
-                  type="text" 
-                  placeholder="Discount voucher" 
+                <input
+                  type="text"
+                  placeholder="Discount voucher"
                   className="voucher-input"
                 />
-                <button className="voucher-apply-btn">
-                  Apply
-                </button>
+                <button className="voucher-apply-btn">Apply</button>
               </div>
             </div>
 
@@ -133,10 +120,6 @@ export default function CartPage() {
                 <span>First order discount (10%)</span>
                 <span className="discount-value">-${calculateDiscount()}</span>
               </div>
-              <div className="summary-row">
-                <span>Delivery fee</span>
-                <span>$50.00</span>
-              </div>
               <div className="summary-total">
                 <span>Total</span>
                 <span>${calculateTotal()}</span>
@@ -144,13 +127,10 @@ export default function CartPage() {
             </div>
 
             <div className="warranty-notice">
-              <p>90 Day Limited Warranty against manufacturer's defects </p>
+              <p>90 Day Limited Warranty against manufacturer's defects</p>
             </div>
 
-            <Link 
-              href="/checkout" 
-              className="checkout-btn"
-            >
+            <Link href="/checkout" className="checkout-btn">
               Checkout Now
             </Link>
           </div>

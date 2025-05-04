@@ -5,9 +5,12 @@ import CartButton from '../components/Card_Produit/CartButton';
 import ProductCard from '../components/Card_Produit/ProductCard'; 
 import Carousel from '../components/carousel/Carousel'
 import NavigBare from '../components/NavigBare';
-import FeaturesSection from '../FeaturesSection';
+import FeaturesSection from './FeaturesSection';
+import Link from "next/link";
 import styles from './module1.css'
+import Image from 'next/image';
 import { use } from 'react';
+import Category from "./Category";
 const mockProducts = [
   {
     id: 1,
@@ -118,7 +121,24 @@ const mockProducts = [
     "category": "Tablets"
   }
 ];
-
+const categories = [
+  {
+    id: 1,
+    image:  "https://i.pinimg.com/736x/22/e0/e4/22e0e4d9a42c13b4099d93a98a6083ea.jpg",
+    href: "/montres"
+  },
+  {
+    id: 2,
+    
+    image: "https://i.pinimg.com/736x/5f/2d/51/5f2d51c9bba9224b7905545a36f52262.jpg",
+    href: "/telephones"
+  },
+  {
+    id: 3,
+    image: "https://i.pinimg.com/736x/f7/b8/94/f7b894e0b96b74caeb4976df04e401b6.jpg",
+    href: "/ecouteurs"
+  }
+];
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
 
@@ -131,9 +151,52 @@ export default function ProductsPage() {
       <NavigBare />
       <Carousel/>
       <FeaturesSection />
+
+
+
+   
+    <div className="  py-12 px-4">
+      <div className="max-w-7xl mx-auto">
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {categories.map((category) => (
+            <Link 
+              key={category.id} 
+              href={category.href}
+              className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"style={
+                {
+                  marginLeft:"100px"
+                }
+              }
+            >
+              <Image
+                src={category.image}
+                alt="image"
+                width={600}
+                height={600}
+                className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0  bg-opacity-40 flex items-center justify-center">
+                <h2 className="text-white text-2xl font-bold tracking-wide">
+                </h2>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+      
+      </div>
+    </div>
+<Category/>
+
+
     <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="relative mb-8">
-        <h1 className="text-3xl font-bold text-white text-center">Nos Produits</h1>
+        <h1 className="text-3xl font-bold text-white text-center"
+        style={{
+          marginBottom:"100px"
+        }}
+        >Highly Recommended</h1>
         <div className="absolute top-0 right-0">
           <CartButton />
         </div>

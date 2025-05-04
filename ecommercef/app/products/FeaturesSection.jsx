@@ -30,14 +30,20 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <div className="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="bg-black py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {features.map((feature, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow duration-300">
+          <div 
+          key={index} 
+          className="bg-gradient-to-r from-gray-950 via-purple-950 to-red-950 p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow duration-300"    style={{ 
+            marginLeft: "100px",
+            width: "200px" ,
+            marginBottom: "150px"           }}
+        >
               {feature.icon}
-              <h3 className="text-xl font-bold text-gray-800 mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
+              <h3 className="text-xl font-bold text-purple-800 mb-2">{feature.title}</h3>
+              <p className="text-white">{feature.description}</p>
             </div>
           ))}
         </div>
@@ -45,3 +51,4 @@ const FeaturesSection = () => {
     </div>
   );
 };
+export default FeaturesSection;

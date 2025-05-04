@@ -1,119 +1,163 @@
 'use client';
 import { useState } from 'react';
+import { useCart } from '../components/Card_Produit/CartContext';
+import { CreditCard, DollarSign } from 'lucide-react';
 import './checkout.css';
 
 export default function Checkout() {
+  const { cartItems } = useCart();
+
   const [formData, setFormData] = useState({
-    country: '',
+    name: '',
+    address1: '',
+    address2: '',
+    city: '',
     state: '',
-    district: '',
-    pinCode: '',
+    zip: '',
     cardName: '',
     cardNumber: '',
+    expiryMonth: '',
+    expiryYear: '',
     cvv: '',
-    expiry: '',
-    paymentMethod: 'card'
+    paymentMethod: 'card',
   });
-
-  const [submitted, setSubmitted] = useState(false); // état pour afficher le message
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const calculateSubtotal = () => cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+  const calculateDiscount = () => (parseFloat(calculateSubtotal()) * 0.1).toFixed(2);
+  const calculateTotal = () => (parseFloat(calculateSubtotal()) - parseFloat(calculateDiscount()) + 50).toFixed(2);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true); // Affiche le message de remerciement
+    alert('Order placed successfully!');
   };
 
-  if (submitted) {
-    return (
-      <div className="thanks-container">
-        <div className="thanks-box">
-          <h2 className="thanks-heading">Merci pour votre commande !</h2>
-          
-          <a href="/" className="btn return-home">Retour à l'accueil</a>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="container">
-      <h2 className="heading">Checkout</h2>
-      <a href="/products" className="back-link">Back to Store</a>
-
-      <div className="row">
-        <div className="col-75">
-          <form onSubmit={handleSubmit}>
-            <h3 className="section-title">Billing Address</h3>
-
-            <div className="row">
-              <div className="col-50">
-                <label>Pays</label>
-                <input type="text" name="country" value={formData.country} onChange={handleChange} required />
+    <div className="checkout-container">
+      <div className="checkout-layout">
+        {/* Left Column */}
+        <div className="left-column">
+          {/* Shipping Address */}
+          <div className="form-section">
+            <h2 className="section-title">Shipping Address</h2>
+            <div className="address-form">
+              <div className="form-group">
+                <label className="form-label">Name</label>
+                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="First & Last Name" className="form-input" />
               </div>
-              <div className="col-50">
-                <label>Ville</label>
-                <input type="text" name="state" value={formData.state} onChange={handleChange} required />
+              <div className="form-group">
+                <label className="form-label">Address 1</label>
+                <input type="text" name="address1" value={formData.address1} onChange={handleChange} placeholder="421, Dubai Main St" className="form-input" />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Address 2</label>
+                <input type="text" name="address2" value={formData.address2} onChange={handleChange} placeholder="Apartment, suite, etc." className="form-input" />
+              </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label className="form-label">City</label>
+                  <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" className="form-input" />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Country</label>
+                  <select name="state" value={formData.state} onChange={handleChange} className="form-input">
+                    <option value="">Select country</option>
+                    <option value="MR">Morocco</option>
+                    <option value="FR">France</option>
+                    <option value="SP">Spain</option>
+                  </select>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Zip</label>
+                <input type="text" name="zip" value={formData.zip} onChange={handleChange} placeholder="Zip code" className="form-input" />
+              </div>
+            </div>
+          </div>
+
+          {/* Payment Method */}
+          <div className="form-section">
+            <h2 className="section-title">Payment Method</h2>
+            <div className="payment-method-section">
+              <div className="payment-options">
+                <label className={`payment-option ${formData.paymentMethod === 'card' ? 'selected' : ''}`}>
+                  <input type="radio" name="paymentMethod" value="card" checked={formData.paymentMethod === 'card'} onChange={handleChange} />
+                  <CreditCard className="icon" />
+                  <span>Card</span>
+                </label>
+
+                <label className={`payment-option ${formData.paymentMethod === 'pay-at-delivery' ? 'selected' : ''}`}>
+                  <input type="radio" name="paymentMethod" value="pay-at-delivery" checked={formData.paymentMethod === 'pay-at-delivery'} onChange={handleChange} />
+                  <DollarSign className="icon" />
+                  <span>Pay at the delivery</span>
+                </label>
               </div>
             </div>
 
-            <div className="row">
-              <div className="col-50">
-                <label>Arondissement</label>
-                <input type="text" name="district" value={formData.district} onChange={handleChange} required />
+            {formData.paymentMethod === 'card' && (
+              <div className="card-details">
+                <div className="form-group">
+                  <label className="form-label">Name on Card</label>
+                  <input type="text" name="cardName" value={formData.cardName} onChange={handleChange} placeholder="First & Last Name" className="form-input" />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Card Number</label>
+                  <input type="text" name="cardNumber" value={formData.cardNumber} onChange={handleChange} placeholder="0000 0000 0000 0000" className="form-input" />
+                </div>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label">Expiry</label>
+                    <div className="expiry-inputs">
+                      <input type="text" name="expiryMonth" value={formData.expiryMonth} onChange={handleChange} placeholder="MM" className="form-input small" maxLength="2" />
+                      <span>/</span>
+                      <input type="text" name="expiryYear" value={formData.expiryYear} onChange={handleChange} placeholder="YYYY" className="form-input medium" maxLength="4" />
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">CVV</label>
+                    <input type="text" name="cvv" value={formData.cvv} onChange={handleChange} placeholder="CVV" className="form-input small" maxLength="3" />
+                  </div>
+                </div>
               </div>
-              <div className="col-50">
-                <label> Code Postal</label>
-                <input type="text" name="pinCode" value={formData.pinCode} onChange={handleChange} required />
+            )}
+          </div>
+        </div>
+
+        {/* Right Column - Order Summary */}
+        <div className="right-column">
+          <div className="order-summary">
+            <h2 className="section-title">Order Summary</h2>
+            {cartItems.map((item) => (
+              <div key={item.id} className="order-item">
+                <h3 className="item-name">{item.name}</h3>
+                <p className="item-quantity">Quantity: {item.quantity}</p>
+                <p className="item-price">${(item.price * item.quantity).toFixed(2)}</p>
+              </div>
+            ))}
+            <div className="price-breakdown">
+              <div className="price-row">
+                <span>Subtotal</span>
+                <span>${calculateSubtotal()}</span>
+              </div>
+              <div className="price-row discount">
+                <span>Discount (10%)</span>
+                <span>-${calculateDiscount()}</span>
               </div>
             </div>
-
-            <p className="note">Veillez remplir les informations de paiyement.</p>
-
-            <h3 className="section-title">Methode de paiyement</h3>
-
-            <div className="payment-options">
-              <label>
-                <input type="radio" name="paymentMethod" value="card" checked={formData.paymentMethod === 'card'} onChange={handleChange} />
-                Credit/ Debit Card
-              </label>
-              <label>
-                <input type="radio" name="paymentMethod" value="netbanking" checked={formData.paymentMethod === 'netbanking'} onChange={handleChange} />
-                Wallet
-              </label>
-              <label>
-                <input type="radio" name="paymentMethod" value="paypal" checked={formData.paymentMethod === 'paypal'} onChange={handleChange} />
-                PayPal
-              </label>
+            <div className="total-section">
+              <div className="price-row total">
+                <span>Total</span>
+                <span>${calculateTotal()}</span>
+              </div>
+              <button className="place-order-btn" onClick={handleSubmit}>
+                Place Order
+              </button>
             </div>
-
-            <div className="row">
-              <div className="col-50">
-                <label>Nom de la carte</label>
-                <input type="text" name="cardName" value={formData.cardName} onChange={handleChange} required />
-              </div>
-              <div className="col-50">
-                <label>Numéro de la carte</label>
-                <input type="text" name="cardNumber" value={formData.cardNumber} onChange={handleChange} required placeholder="0000 0000 0000 0000" />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-50">
-                <label>Code de securité (CVV)</label>
-                <input type="text" name="cvv" value={formData.cvv} onChange={handleChange} required />
-              </div>
-              <div className="col-50">
-                <label> Date d'expiration</label>
-                <input type="text" name="expiry" value={formData.expiry} onChange={handleChange} required placeholder="MM/YYYY" />
-              </div>
-            </div>
-
-            <input type="submit" value="Place Order" className="btn" />
-          </form>
+          </div>
         </div>
       </div>
     </div>

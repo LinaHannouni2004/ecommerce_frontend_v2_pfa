@@ -1,0 +1,360 @@
+/* Base Styles */
+.cart-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  .cart-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: left;
+  }
+  
+  /* Image Styles */
+  .product-image-container {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    flex-shrink: 0;
+    background-color: #f8f8f8;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .product-image {
+    object-fit: contain;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Layout */
+  .cart-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  @media (min-width: 1024px) {
+    .cart-layout {
+      flex-direction: row;
+    }
+  }
+  
+  
+  @media (min-width: 1024px) {
+    .product-list-container {
+      width: 66.666667%;
+    }
+  }
+  
+  .order-summary-container {
+    width: 100%;
+  }
+  
+  @media (min-width: 1024px) {
+    .order-summary-container {
+      width: 33.333333%;
+    }
+  }
+  
+  /* Product List Styles */
+  .product-list {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+  
+  .product-list-header {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1rem;
+    font-weight: 500;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .header-product {
+    grid-column: span 6;
+  }
+  
+  .header-quantity, .header-total {
+    grid-column: span 2;
+  }
+  
+  .header-action {
+    grid-column: span 2;
+  }
+  
+  .empty-cart {
+    padding: 2rem 0;
+    text-align: center;
+    color: #6b7280;
+  }
+  
+  .cart-item {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .item-product {
+    grid-column: span 6;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .product-name {
+    font-weight: 500;
+  }
+  
+  .item-quantity {
+    grid-column: span 2;
+  }
+  
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+  }
+  /* Add these styles to your CSS file */
+
+/* Make all text in product list black */
+.product-list {
+    color: black;
+  }
+  
+  /* Header text */
+  .product-list-header {
+    color: black;
+  }
+  
+  /* Quantity controls */
+  .quantity-controls {
+    color: black;
+  }
+  
+  /* Total price text */
+  .item-total {
+    color: black;
+  }
+  
+  /* Summary section text */
+  .summary-details {
+    color: black;
+  }
+  
+  /* Summary row text */
+  .summary-row {
+    color: black;
+  }
+  
+  /* Total text in summary */
+  .summary-total {
+    color: black;
+  }
+  
+  /* Discount value (keeping red for discount) */
+  .discount-value {
+    color: #ef4444; /* Keeping this red as it's standard for discounts */
+  }
+  
+  /* Product name text */
+  .product-name {
+    color: black;
+  }
+  
+  /* Quantity value text */
+  .quantity-value {
+    color: black;
+  }
+  
+  /* Remove button text */
+  .remove-btn {
+    color: #ef4444; /* Keeping red for remove action */
+  }
+  
+  /* Update cart button text */
+  .update-cart-btn {
+    color: black;
+    background-color: white;
+  }
+  
+  /* Voucher input text */
+  .voucher-input {
+    color: black;
+  }
+  
+  /* Voucher apply button text */
+  .voucher-apply-btn {
+    color: white; /* Keeping white text on black button */
+  }
+  
+  /* Checkout button text */
+  .checkout-btn {
+    color: white; /* Keeping white text on black button */
+  }
+  .quantity-btn {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d1d5db;
+    background-color: #f3f4f6;
+    transition: all 0.2s;
+  }
+  
+  .quantity-btn:hover {
+    background-color: #e5e7eb;
+  }
+  
+  .quantity-btn.minus {
+    border-radius: 0.25rem 0 0 0.25rem;
+  }
+  
+  .quantity-btn.plus {
+    border-radius: 0 0.25rem 0.25rem 0;
+  }
+  
+  .quantity-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .quantity-value {
+    width: 2.5rem;
+    text-align: center;
+    border-top: 1px solid #d1d5db;
+    border-bottom: 1px solid #d1d5db;
+    background-color: white;
+  }
+  
+  .item-total {
+    grid-column: span 2;
+    font-weight: 500;
+  }
+  
+  .item-action {
+    grid-column: span 2;
+  }
+  
+  .remove-btn {
+    color: #ef4444;
+    transition: color 0.2s;
+  }
+  
+  .remove-btn:hover {
+    color: #dc2626;
+  }
+  
+  .update-cart-btn {
+    margin-top: 1.5rem;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid black;
+    border-radius: 0.25rem;
+    transition: all 0.2s;
+    background-color: black;
+    color: white;
+  }
+  
+  
+  /* Order Summary Styles */
+  .order-summary {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+  
+  .summary-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  .voucher-section {
+    margin-bottom: 1rem;
+  }
+  
+  .voucher-input-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .voucher-input {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+  }
+  
+  .voucher-apply-btn {
+    padding: 0.5rem 1rem;
+    background-color: black;
+    color: white;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s;
+  }
+  
+  .voucher-apply-btn:hover {
+    background-color: #1f2937;
+  }
+  
+  .summary-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .discount-value {
+    color: #ef4444;
+  }
+  
+  .summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 1.125rem;
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .warranty-notice {
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  .checkout-btn {
+    margin-top: 1.5rem;
+    display: block;
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 0.75rem;
+    text-align: center;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s;
+  }
+  
+  .checkout-btn:hover {
+    background-color: #1f2937;
+  }

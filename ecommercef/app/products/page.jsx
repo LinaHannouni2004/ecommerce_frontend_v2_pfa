@@ -55,6 +55,66 @@ const mockProducts = [
     priceTag: "Best Price",
     image: "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ps5-dark.svg",
     category: "Gaming"
+  },
+  {
+    "id": 5,
+    "name": "PlayStation®5 Console - 1TB, PRO Controller",
+    "price": 499,
+    "discount": "Up to 10% off",
+    "rating": 4.8,
+    "reviews": 2957,
+    "delivery": "Fast Delivery",
+    "priceTag": "Best Price",
+    "image": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ps5-dark.svg",
+    "category": "Gaming"
+  },
+  {
+    "id": 6,
+    "name": "Apple MacBook PRO Laptop with M2 chip",
+    "price": 2599,
+    "discount": "Up to 5% off",
+    "rating": 4.9,
+    "reviews": 1076,
+    "delivery": "Fast Delivery",
+    "priceTag": "Best Price",
+    "image": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/macbook-pro-dark.svg",
+    "category": "Laptops"
+  },
+  {
+    "id": 7,
+    "name": "Apple Watch SE [GPS 40mm], Smartwatch",
+    "price": 699,
+    "discount": "Up to 20% off",
+    "rating": 4.7,
+    "reviews": 387,
+    "delivery": "Fast Delivery",
+    "priceTag": "Best Price",
+    "image": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/apple-watch-dark.svg",
+    "category": "Wearables"
+  },
+  {
+    "id": 8,
+    "name": "Microsoft Surface Pro, Copilot+ PC, 13 Inch",
+    "price": 899,
+    "discount": "Up to 35% off",
+    "rating": 4.9,
+    "reviews": 4775,
+    "delivery": "Fast Delivery",
+    "priceTag": "Best Price",
+    "image": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ipad-keyboard-dark.svg",
+    "category": "Tablets"
+  },
+  {
+    "id": 9,
+    "name": "Microsoft Surface Pro, Copilot+ PC, 13 Inch",
+    "price": 899,
+    "discount": "Up to 35% off",
+    "rating": 4.9,
+    "reviews": 4775,
+    "delivery": "Fast Delivery",
+    "priceTag": "Best Price",
+    "image": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ipad-keyboard-dark.svg",
+    "category": "Tablets"
   }
 ];
 
@@ -77,7 +137,8 @@ export default function ProductsPage() {
         </div>
       </div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-items-center pl-524">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-items-center pl-524 " 
+      >
       {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

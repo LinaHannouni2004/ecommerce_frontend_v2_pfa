@@ -13,9 +13,9 @@ export default function ProductCard({ product }) {
 
   return (
     <Link 
-      href={`/products/${product.id}`}
-      className="group block rounded-lg border border-black bg-gray-950 p-4 transition hover:border-gray-600 hover:shadow-lg"
-    >
+    href={`/products/${product.id}`}
+    className="group block rounded-lg border border-black bg-gray-950 p-4 transition hover:border-gray-600 hover:shadow-lg !ml-[100px]"
+  >
       <div className="relative h-56 w-full mb-4">
         <img 
           src={product.image} 

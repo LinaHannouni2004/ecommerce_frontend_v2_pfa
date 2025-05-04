@@ -1,6 +1,9 @@
 'use client'
 import { Fragment, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image';
+import { appleImg, searchImg, bagImg } from '../utils';
+
 import {
   Popover,
   PopoverButton,
@@ -94,13 +97,20 @@ export default function Example() {
   }
 
   return (
+    
     <div className="bg-black">
+
       <header className="relative bg-black">
         <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="border-b border-gray-700">
-            <div className="flex h-16 items-center justify-center">
-              {/* Menu hamburger supprimé ici */}
 
+          
+            
+          
+          <div className="flex h-16 items-center justify-between">     
+            {/*icone*/}      
+            <div className="flex items-center ml-100">
+                     <Image src='/logoWeb.svg' alt='logo' width={50} height={50}  />
+                   </div>
               {/* Navigation principale */}
               <PopoverGroup className="hidden lg:flex lg:gap-x-8">
                 {navigation.categories.map((category) => (
@@ -177,7 +187,9 @@ export default function Example() {
                 ))}
               </PopoverGroup>
 
-              <div className="flex items-center">
+              <div className="flex items-center space-x-4">              
+
+              
                 {/* Panier avec compteur */}
                 <button 
                   onClick={addToCart}
@@ -187,7 +199,7 @@ export default function Example() {
                 </button>
               </div>
             </div>
-          </div>
+          
         </nav>
       </header>
     </div>

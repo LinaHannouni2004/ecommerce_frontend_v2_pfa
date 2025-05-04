@@ -40,8 +40,8 @@ function Header() {
       {/* Icônes et actions */}
       <div className="flex items-center gap-6">
         <div className="flex gap-4">
-          <Image src={searchImg} alt="search" width={18} height={18} className="cursor-pointer" />
-          <Image src={bagImg} alt="bag" width={18} height={18} className="cursor-pointer" />
+         
+          
         </div>
 
         {/* Boutons login/register */}

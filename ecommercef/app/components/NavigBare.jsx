@@ -3,7 +3,7 @@ import { Fragment, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image';
 import { appleImg, searchImg, bagImg } from '../utils';
-
+import CartButton from './Card_Produit/CartButton';
 import {
   Popover,
   PopoverButton,
@@ -14,6 +14,7 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
+import SearchBar from './SearchBar';
 
 const navigation = {
   categories: [
@@ -188,8 +189,9 @@ export default function Example() {
               </PopoverGroup>
 
               <div className="flex items-center space-x-4">              
-
-              
+              <div className="fixed top-0 left-0 w-full z-50">
+              <CartButton />
+</div>
                 {/* Panier avec compteur */}
                 <button 
                   onClick={addToCart}

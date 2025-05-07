@@ -4,6 +4,7 @@ import { useCart } from '../components/Card_Produit/CartContext';
 import { FaTrash } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
+import NavigBare from '../components/NavigBare'
 import './style.css';
 
 export default function CartPage() {
@@ -22,8 +23,14 @@ export default function CartPage() {
   };
 
   return (
-    <div className="cart-container">
-      <h1 className="cart-title">Shopping Cart</h1>
+    <div >
+      <NavigBare/>
+      <h1 className="cart-title"
+      style={{
+        marginTop:"50px",
+        marginBottom:"50px"
+      }}
+      >Shopping Cart</h1>
 
       <div className="cart-layout">
         {/* Product List */}

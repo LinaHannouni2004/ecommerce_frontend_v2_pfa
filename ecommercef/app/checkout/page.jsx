@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useCart } from '../components/Card_Produit/CartContext';
 import { CreditCard, DollarSign } from 'lucide-react';
 import './checkout.css';
+import NavigBare from '../components/NavigBare'
 
 export default function Checkout() {
   const { cartItems } = useCart();
@@ -37,6 +38,9 @@ export default function Checkout() {
   };
 
   return (
+    <div>
+<NavigBare/>
+   
     <div className="checkout-container">
       <div className="checkout-layout">
         {/* Left Column */}
@@ -160,6 +164,7 @@ export default function Checkout() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

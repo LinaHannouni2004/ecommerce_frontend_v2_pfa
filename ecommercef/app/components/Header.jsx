@@ -9,9 +9,11 @@ function Header() {
 
   const handleNavClick = (navItem) => {
     if (navItem === "Store") {
-      router.push('/products');
+      router.push('/aboutus');
     }
+  
   };
+  
 
   return (
     <header className="bg-black w-full py-5 sm:px-10 px-5 flex justify-between items-center">

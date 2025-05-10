@@ -3,7 +3,7 @@ import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { appleImg, searchImg, bagImg } from '../utils';
-
+import CartButton from './Card_Produit/CartButton';
 import {
   Popover,
   PopoverButton,
@@ -13,7 +13,12 @@ import {
 import {
   Bars3Icon,
   XMarkIcon,
+<<<<<<< HEAD
 } from '@heroicons/react/24/outline';
+=======
+} from '@heroicons/react/24/outline'
+import SearchBar from './SearchBar';
+>>>>>>> 4bec1d7d3083607c30a53e97529e01de01dc7cb0
 
 const navigation = {
   categories: [
@@ -174,6 +179,7 @@ export default function Example() {
                 </Popover>
               ))}
 
+<<<<<<< HEAD
               {/* Static Pages */}
               {navigation.pages.map((page) => (
                 <Link
@@ -183,6 +189,28 @@ export default function Example() {
                     activeNav === page.name ? 'text-white' : 'text-gray-400'
                   } hover:text-white transition-colors`}
                   onClick={() => handleNavClick(page.name)}
+=======
+                {navigation.pages.map((page) => (
+                  <Link
+                    key={page.name}
+                    href={page.href}
+                    className={`text-sm font-medium ${activeNav === page.name ? 'text-white' : 'text-gray-400'} hover:text-white transition-colors`}
+                    onClick={() => handleNavClick(page.name)}
+                  >
+                    {page.name}
+                  </Link>
+                ))}
+              </PopoverGroup>
+
+              <div className="flex items-center space-x-4">              
+              <div className="fixed top-0 left-0 w-full z-50">
+              <CartButton />
+</div>
+                {/* Panier avec compteur */}
+                <button 
+                  onClick={addToCart}
+                  className="ml-4 p-2 text-gray-400 hover:text-white transition-colors"
+>>>>>>> 4bec1d7d3083607c30a53e97529e01de01dc7cb0
                 >
                   {page.name}
                 </Link>

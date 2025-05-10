@@ -61,82 +61,79 @@ const mockProducts = [
     category: "Gaming"
   },
   {
-    "id": 5,
-    "name": "PlayStation®5 Console - 1TB, PRO Controller",
-    "price": 499,
-    "discount": "Up to 10% off",
-    "rating": 4.8,
-    "reviews": 2957,
-    "delivery": "Fast Delivery",
-    "priceTag": "Best Price",
-    "image": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ps5-dark.svg",
-    "category": "Gaming"
+    id: 5,
+    name: "PlayStation®5 Console - 1TB, PRO Controller",
+    price: 499,
+    discount: "Up to 10% off",
+    rating: 4.8,
+    reviews: 2957,
+    delivery: "Fast Delivery",
+    priceTag: "Best Price",
+    image: "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ps5-dark.svg",
+    category: "Gaming"
   },
   {
-    "id": 6,
-    "name": "Apple MacBook PRO Laptop with M2 chip",
-    "price": 2599,
-    "discount": "Up to 5% off",
-    "rating": 4.9,
-    "reviews": 1076,
-    "delivery": "Fast Delivery",
-    "priceTag": "Best Price",
-    "image": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/macbook-pro-dark.svg",
-    "category": "Laptops"
+    id: 6,
+    name: "Apple MacBook PRO Laptop with M2 chip",
+    price: 2599,
+    discount: "Up to 5% off",
+    rating: 4.9,
+    reviews: 1076,
+    delivery: "Fast Delivery",
+    priceTag: "Best Price",
+    image: "https://flowbite.s3.amazonaws.com/blocks/e-commerce/macbook-pro-dark.svg",
+    category: "Laptops"
   },
   {
-    "id": 7,
-    "name": "Apple Watch SE [GPS 40mm], Smartwatch",
-    "price": 699,
-    "discount": "Up to 20% off",
-    "rating": 4.7,
-    "reviews": 387,
-    "delivery": "Fast Delivery",
-    "priceTag": "Best Price",
-    "image": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/apple-watch-dark.svg",
-    "category": "Wearables"
+    id: 7,
+  name: "Apple Watch SE [GPS 40mm], Smartwatch",
+    price: 699,
+    discount: "Up to 20% off",
+    rating: 4.7,
+    reviews: 387,
+    delivery: "Fast Delivery",
+    priceTag: "Best Price",
+    image: "https://flowbite.s3.amazonaws.com/blocks/e-commerce/apple-watch-dark.svg",
+    category: "Wearables"
   },
   {
-    "id": 8,
-    "name": "Microsoft Surface Pro, Copilot+ PC, 13 Inch",
-    "price": 899,
-    "discount": "Up to 35% off",
-    "rating": 4.9,
-    "reviews": 4775,
-    "delivery": "Fast Delivery",
-    "priceTag": "Best Price",
-    "image": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ipad-keyboard-dark.svg",
-    "category": "Tablets"
+    id: 8,
+    name: "Microsoft Surface Pro, Copilot+ PC, 13 Inch",
+    price: 899,
+    discount: "Up to 35% off",
+    rating: 4.9,
+    reviews: 4775,
+    delivery: "Fast Delivery",
+    priceTag: "Best Price",
+    image: "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ipad-keyboard-dark.svg",
+    category: "Tablets"
   },
   {
-    "id": 9,
-    "name": "Microsoft Surface Pro, Copilot+ PC, 13 Inch",
-    "price": 899,
-    "discount": "Up to 35% off",
-    "rating": 4.9,
-    "reviews": 4775,
-    "delivery": "Fast Delivery",
-    "priceTag": "Best Price",
-    "image": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ipad-keyboard-dark.svg",
-    "category": "Tablets"
+    id: 9,
+    name: "Microsoft Surface Pro, Copilot+ PC, 13 Inch",
+    price: 899,
+    discount: "Up to 35% off",
+    rating: 4.9,
+    reviews: 4775,
+    delivery: "Fast Delivery",
+    priceTag: "Best Price",
+    image: "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ipad-keyboard-dark.svg",
+    category: "Tablets"
   }
 ];
-const categories = [
+const products1 = [
   {
-    id: 1,
+    id: 10,
     image:  "https://i.pinimg.com/736x/22/e0/e4/22e0e4d9a42c13b4099d93a98a6083ea.jpg",
-    href: "/montres"
   },
   {
-    id: 2,
+    id: 11,
     
     image: "https://i.pinimg.com/736x/5f/2d/51/5f2d51c9bba9224b7905545a36f52262.jpg",
-    href: "/telephones"
   },
   {
-    id: 3,
+    id: 12,
     image: "https://i.pinimg.com/736x/f7/b8/94/f7b894e0b96b74caeb4976df04e401b6.jpg",
-    href: "/ecouteurs"
   }
 ];
 export default function ProductsPage() {
@@ -149,6 +146,7 @@ export default function ProductsPage() {
   return (
     <div>
       <NavigBare />
+      <CartButton />
       <Carousel/>
       <FeaturesSection />
 
@@ -158,35 +156,30 @@ export default function ProductsPage() {
     <div className="  py-12 px-4">
       <div className="max-w-7xl mx-auto">
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {categories.map((category) => (
-            <Link 
-              key={category.id} 
-              href={category.href}
-              className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"style={
-                {
-                  marginLeft:"100px"
-                }
-              }
-            >
-              <Image
-                src={category.image}
-                alt="image"
-                width={600}
-                height={600}
-                className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0  bg-opacity-40 flex items-center justify-center">
-                <h2 className="text-white text-2xl font-bold tracking-wide">
-                </h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {products1.map((product) => (
+              <div 
+                key={product.id} 
+                className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                style={{ marginLeft: "100px" }}
+              >
+                <Image
+                  src={product.image}
+                  alt="Product image"
+                  width={600}
+                  height={600}
+                  className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-opacity-40 flex items-center justify-center">
+                  <h2 className="text-white text-2xl font-bold tracking-wide">
+                    {/* Texte optionnel ici */}
+                  </h2>
+                </div>
               </div>
-            </Link>
-          ))}
+            ))}
+          </div>
         </div>
-
-      
       </div>
-    </div>
 <Category/>
 
 
@@ -198,7 +191,6 @@ export default function ProductsPage() {
         }}
         >Highly Recommended</h1>
         <div className="absolute top-0 right-0">
-          <CartButton />
         </div>
       </div>
       

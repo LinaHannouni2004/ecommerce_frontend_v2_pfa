@@ -9,7 +9,15 @@ export default function CartButton() {
   return (
     <div className="fixed top-4 right-4 z-50 flex items-center gap-4">
       {/* Barre de recherche */}
-      <div className="w-64">
+      <div className="w-64"
+      style={{
+        position:"fixed",
+       right: "50px",
+       zIndex: 50 ,
+       top: "16px",
+        
+      }}
+      >
         <SearchBar />
       </div>
       

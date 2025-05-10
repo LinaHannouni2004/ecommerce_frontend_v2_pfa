@@ -3,7 +3,7 @@ import ProductCard from '../../components/Card_Produit/ProductCard';
 import Link from 'next/link';
 import NavigBare from '../../components/NavigBare'
 
-const smartwatchProducts = [{
+const PCLaptopProducts = [{
   id: 1,
     name: "Apple Watch Series 9",
     price: 429,
@@ -75,14 +75,14 @@ const smartwatchProducts = [{
   // Ajoutez d'autres produits...
 ];
 
-export default function SmartwatchPage() {
+export default function PCLaptopPage() {
   return (
        <div>
     <NavigBare/>
     <div className=" min-h-screen">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Smartwatch</h1>
+          <h1 className="text-3xl font-bold mb-2">PC & Laptop </h1>
          
           <Link href="/products" className="text-blue-600 hover:underline mt-4 inline-block">
             ← Retour à l'accueil
@@ -90,7 +90,7 @@ export default function SmartwatchPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {smartwatchProducts.map((product) => (
+          {PCLaptopProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

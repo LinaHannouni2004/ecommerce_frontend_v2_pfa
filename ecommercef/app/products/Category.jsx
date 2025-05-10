@@ -16,35 +16,35 @@ export default function Category() {
       title: "Home Appliances",
       description: "Appareils électroménagers pour votre maison",
       image: "https://i.pinimg.com/736x/ee/6a/b2/ee6ab2d0dc78dda0ec5e0c0583bf9e72.jpg",
-      href: "/home-appliances"
+      href: "/products/home-appliances"
     },
     {
       id: 3,
       title: "PC & Laptop",
       description: "Ordinateurs et portables haute performance",
       image: "https://i.pinimg.com/736x/c5/c9/07/c5c90711a23fd61e5fba81c62daac9ca.jpg",
-      href: "/pc-laptop"
+      href: "/products/pc-laptop"
     },
     {
       id: 4,
       title: "headphones & airpods",
       description: "headphones & airpods",
       image: "https://i.pinimg.com/736x/88/9f/ca/889fca9c5c1f6e90d73c3254aace4d2b.jpg",
-      href: "/kitchen"
+      href: "/products/headphones"
     },
     {
       id: 5,
       title: "Phone & Tablet",
       description: "Smartphones et tablettes dernière génération",
       image: "https://i.pinimg.com/736x/52/a3/ac/52a3ac8d66f5d853184a0c5b00ce0d33.jpg",
-      href: "/phone-tablet"
+      href: "/products/phones"
     },
     {
       id: 6,
       title: "Accessories",
       description: "Accessoires complémentaires",
       image: "https://i.pinimg.com/736x/73/71/4e/73714ed2ffbe33da5f8b4304f6049bad.jpg",
-      href: "/accessories"
+      href: "/products/accessories"
     }
   ];
 

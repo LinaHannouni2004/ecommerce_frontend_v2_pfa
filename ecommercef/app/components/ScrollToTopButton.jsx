@@ -27,7 +27,7 @@ const ScrollToTopButton = () => {
 
   return (
     isVisible && (
-      <button
+   <button
         onClick={scrollToTop}
         className="fixed bottom-8 right-8 z-50 p-3 bg-[rgb(168,157,91)] rounded-full shadow-lg hover:bg-[rgb(140,130,70)] transition-all duration-300"
         aria-label="Retour en haut"

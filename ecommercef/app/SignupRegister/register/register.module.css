@@ -139,4 +139,44 @@
   text-align: center;
   font-size: 14px;
 }
+/* Full Width Radio Button Styles */
+.fullWidthRadioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
 
+.fullWidthRadioButton {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #eff6ff27;
+}
+
+.fullWidthRadioButton:hover {
+  border-color: #cbd5e1;
+}
+
+.radioButtonActive {
+  border-color: #3b82f6;
+  background-color: #4f46e5;
+}
+
+.radioInput {
+  position: absolute;
+  opacity: 0;
+}
+
+.radioButtonText {
+  color: #000; /* Black text */
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+}

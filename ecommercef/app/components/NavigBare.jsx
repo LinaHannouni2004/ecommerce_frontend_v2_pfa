@@ -3,7 +3,6 @@ import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { appleImg, searchImg, bagImg } from '../utils';
-import CartButton from './Card_Produit/CartButton';
 import {
   Popover,
   PopoverButton,
@@ -13,12 +12,7 @@ import {
 import {
   Bars3Icon,
   XMarkIcon,
-<<<<<<< HEAD
 } from '@heroicons/react/24/outline';
-=======
-} from '@heroicons/react/24/outline'
-import SearchBar from './SearchBar';
->>>>>>> 4bec1d7d3083607c30a53e97529e01de01dc7cb0
 
 const navigation = {
   categories: [
@@ -27,14 +21,12 @@ const navigation = {
       name: 'Nos produit',
       featured: [
         {
-          name: 'New Arrivals',
-          href: '/new-arrivals',
+          
           imageSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSOPpEZWs5-aif5n5F7nih-2EJyB9H6s6_bg&s',
           imageAlt: 'New arrival products',
         },
         {
-          name: 'Best Sells',
-          href: '/best-sellers',
+          
           imageSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpHd38Zas18mXcXoqRWzDdzqAKZlVqyqZCkCre8N7BYsHzWli_mb8flP4IBj_NUCfWfHw&usqp=CAU',
           imageAlt: 'Best selling products',
         },
@@ -44,12 +36,12 @@ const navigation = {
           id: 'Nos produits',
           name: 'Nos produits',
           items: [
-            { name: 'Smartwatch', href: '/products/smartphones' },
-            { name: 'Home Appliances', href: '/products/cameras' },
-            { name: 'PC & Laptop', href: '/products/smartwatches' },
-            { name: 'Headphones & Airpods', href: '/products/laptops' },
-            { name: 'Phone & Tablet', href: '/products/cameras' },
-            { name: 'Accessories', href: '/products/smartwatches' },
+            { name: 'Smartwatch', href: '/products/smartwatch' },
+            { name: 'Home Appliances', href: '/products/home-appliances' },
+            { name: 'PC & Laptop', href: '/products/pc-laptop' },
+            { name: 'Headphones & Airpods', href: '/products/headphones' },
+            { name: 'Phone & Tablet', href: '/products/phones' },
+            { name: 'Accessories', href: '/products/accessories' },
           ],
         },
       ],
@@ -60,38 +52,32 @@ const navigation = {
       featured: [
         {
           name: 'New Arrivals',
-          href: '/premium/new-arrivals',
           imageSrc: 'https://specials-images.forbesimg.com/imageserve/61d8a1eb3a9cf24443034ea8/Asus-Zenbook-17-Fold-OLED/960x0.jpg?fit=scale',
           imageAlt: 'Premium new arrivals',
+          href: '/products/premium/new-arrivals'
         },
         {
           name: 'Best Sells',
-          href: '/premium/best-sellers',
           imageSrc: 'https://static.wui.fr//photos/319808/zoom-ces-2022--%C2%A010-nouveaut%C3%A9s-fun-et-high-tech-%C3%A0-las-vegas.jpg',
           imageAlt: 'Premium best sellers',
+          href: '/products/premium/best-sellers'
         },
       ],
       sections: [
         {
           id: 'Nos produits',
-          name: 'Nos produits',
-          items: [
-            { name: 'Smart Phones', href: '/premium/smartphones' },
-            { name: 'Cameras', href: '/premium/cameras' },
-            { name: 'Smart watches', href: '/premium/smartwatches' },
-            { name: 'PC Portables', href: '/premium/laptops' },
-          ],
+          items: [],
         },
       ],
     },
   ],
   pages: [
     { name: 'Company', href: '/aboutus' },
-    { name: 'Stores', href: '/stores' },
+    { name: 'Store', href: '/products' },
   ],
 };
 
-export default function Example() {
+export default function Navbar() {
   const [cartCount, setCartCount] = useState(0);
   const [activeNav, setActiveNav] = useState('');
 
@@ -127,41 +113,55 @@ export default function Example() {
                     </PopoverButton>
                   </div>
 
-                  {/* Panel */}
+                  {/* Panel - Modified to shift content right */}
                   <PopoverPanel className="absolute inset-x-0 top-full text-sm text-gray-400 z-0 pointer-events-none">
                     <div className="absolute inset-0 top-1/2 bg-black shadow-sm" />
                     <div className="relative bg-black pointer-events-auto">
                       <div className="mx-auto max-w-7xl px-8">
-                        <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
-                          <div className="col-start-2 grid grid-cols-2 gap-x-8">
+                        <div className="grid grid-cols-5 gap-x-8 gap-y-10 py-16">
+                          {/* Empty column to push content right */}
+                          <div className="col-span-1"></div>
+                          
+                          {/* Featured products column */}
+                          <div className="col-span-2 grid grid-cols-2 gap-x-8">
                             {category.featured.map((item) => (
                               <div key={item.name} className="group relative text-base sm:text-sm">
-                                <img
-                                  alt={item.imageAlt}
-                                  src={item.imageSrc}
-                                  className="aspect-square w-full rounded-lg bg-gray-800 object-cover group-hover:opacity-75"
-                                />
-                                <Link
-                                  href={item.href}
-                                  className="mt-6 block font-medium text-white"
-                                  onClick={addToCart}
-                                >
+                                <div className="aspect-square w-full rounded-lg bg-gray-800 overflow-hidden">
+                                  {category.id === 'premium-products' && item.href ? (
+                                    <Link href={item.href}>
+                                      <img
+                                        alt={item.imageAlt}
+                                        src={item.imageSrc}
+                                        className="object-cover w-full h-full cursor-pointer"
+                                      />
+                                    </Link>
+                                  ) : (
+                                    <img
+                                      alt={item.imageAlt}
+                                      src={item.imageSrc}
+                                      className="object-cover w-full h-full"
+                                    />
+                                  )}
+                                </div>
+                                <p className="mt-6 block font-medium text-white">
                                   {item.name}
-                                </Link>
-                                <p className="mt-1 text-gray-400">Shop now</p>
+                                </p>
+                              
                               </div>
                             ))}
                           </div>
-                          <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
+                          
+                          {/* Product categories column - shifted right */}
+                          <div className="col-span-2">
                             {category.sections.map((section) => (
-                              <div key={section.name}>
-                                <p className="font-medium text-white">{section.name}</p>
-                                <ul className="mt-6 space-y-6">
+                              <div key={section.name} className="ml-8">
+                                <p className="font-medium text-white mb-6">{section.name}</p>
+                                <ul className="space-y-4">
                                   {section.items.map((item) => (
-                                    <li key={item.name} className="flow-root">
+                                    <li key={item.name}>
                                       <Link
                                         href={item.href}
-                                        className="-m-2 block p-2 text-gray-400 hover:text-white"
+                                        className="block text-gray-400 hover:text-white transition-colors"
                                         onClick={addToCart}
                                       >
                                         {item.name}
@@ -179,7 +179,6 @@ export default function Example() {
                 </Popover>
               ))}
 
-<<<<<<< HEAD
               {/* Static Pages */}
               {navigation.pages.map((page) => (
                 <Link
@@ -189,28 +188,6 @@ export default function Example() {
                     activeNav === page.name ? 'text-white' : 'text-gray-400'
                   } hover:text-white transition-colors`}
                   onClick={() => handleNavClick(page.name)}
-=======
-                {navigation.pages.map((page) => (
-                  <Link
-                    key={page.name}
-                    href={page.href}
-                    className={`text-sm font-medium ${activeNav === page.name ? 'text-white' : 'text-gray-400'} hover:text-white transition-colors`}
-                    onClick={() => handleNavClick(page.name)}
-                  >
-                    {page.name}
-                  </Link>
-                ))}
-              </PopoverGroup>
-
-              <div className="flex items-center space-x-4">              
-              <div className="fixed top-0 left-0 w-full z-50">
-              <CartButton />
-</div>
-                {/* Panier avec compteur */}
-                <button 
-                  onClick={addToCart}
-                  className="ml-4 p-2 text-gray-400 hover:text-white transition-colors"
->>>>>>> 4bec1d7d3083607c30a53e97529e01de01dc7cb0
                 >
                   {page.name}
                 </Link>

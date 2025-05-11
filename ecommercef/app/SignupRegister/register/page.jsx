@@ -10,35 +10,40 @@ export default function RegisterPage() {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    userType: 'user'
   });
   const [error, setError] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Clear error when user types
     if (error) setError('');
+  };
+
+  const handleUserTypeChange = (type) => {
+    setFormData(prev => ({ ...prev, userType: type }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
     }
 
-    // Validate password strength (optional)
     if (formData.password.length < 8) {
       setError('Password must be at least 8 characters');
       return;
     }
 
-    // Handle successful registration
     console.log('Registration data:', formData);
-    router.push('/products');
+    if (formData.userType === 'admin') {
+      router.push('/admin/dashboard');
+    } else {
+      router.push('/products');
+    }
   };
 
   return (
@@ -115,6 +120,33 @@ export default function RegisterPage() {
                 required
                 minLength={8}
               />
+            </div>
+  <div className={styles.formGroup}>
+              <label className={styles.inputLabel}>Account Type</label>
+              <div className={styles.fullWidthRadioGroup}>
+                <label className={`${styles.fullWidthRadioButton} ${formData.userType === 'user' ? styles.radioButtonActive : ''}`}>
+                  <input
+                    type="radio"
+                    name="userType"
+                    value="user"
+                    checked={formData.userType === 'user'}
+                    onChange={() => handleUserTypeChange('user')}
+                    className={styles.radioInput}
+                  />
+                  <span className={styles.radioButtonText}>User</span>
+                </label>
+                <label className={`${styles.fullWidthRadioButton} ${formData.userType === 'admin' ? styles.radioButtonActive : ''}`}>
+                  <input
+                    type="radio"
+                    name="userType"
+                    value="admin"
+                    checked={formData.userType === 'admin'}
+                    onChange={() => handleUserTypeChange('admin')}
+                    className={styles.radioInput}
+                  />
+                  <span className={styles.radioButtonText}>Admin</span>
+                </label>
+              </div>
             </div>
 
             <button type="submit" className={styles.loginButton}>

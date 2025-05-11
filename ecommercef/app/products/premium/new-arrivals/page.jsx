@@ -1,13 +1,14 @@
-'use client';
+'use client'
 import { useState, useEffect } from 'react';
-import ProductCard from '../../components/Card_Produit/ProductCard';
+import ProductCard from '../../../components/Card_Produit/ProductCard';
 import Link from 'next/link';
-import NavigBare from '../../components/NavigBare';
-import { FiChevronRight, FiX, FiFilter, FiCheck, FiShoppingCart, FiSearch } from 'react-icons/fi';
+import NavigBare from '../../../components/NavigBare';
+import { FiChevronRight, FiX, FiFilter, FiCheck, FiShoppingCart, FiStar } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useCart } from '../../components/Card_Produit/CartContext';
-import CartButton from "../../components/Card_Produit/CartButton";
-const PhonesProducts = [
+import { useCart } from '../../../components/Card_Produit/CartContext';
+import './premium-styles.css';
+
+const NewarrivalsProducts = [
   
   {
     id: 1,
@@ -274,168 +275,225 @@ const PhonesProducts = [
     }
   }
 ];
-
 const colorOptions = [
   { name: "Noir", value: "black", bg: "bg-gray-900", border: "border-gray-700", text: "text-gray-900" },
-  { name: "Argent", value: "silver", bg: "bg-gray-300", border: "border-gray-400", text: "text-gray-700" },
   { name: "Blanc", value: "white", bg: "bg-white", border: "border-gray-300", text: "text-gray-700" },
-  { name: "Bleu", value: "blue", bg: "bg-blue-500", border: "border-blue-600", text: "text-blue-700" },
-  { name: "Vert", value: "green", bg: "bg-emerald-500", border: "border-emerald-600", text: "text-emerald-700" },
-  { name: "Rose", value: "pink", bg: "bg-pink-400", border: "border-pink-500", text: "text-pink-700" },
+  { name: "Violet", value: "purple", bg: "bg-purple-500", border: "border-purple-600", text: "text-purple-700" },
+  { name: "Argent", value: "silver", bg: "bg-gray-300", border: "border-gray-400", text: "text-gray-700" },
 ];
-
-export default function PhonesPage() {
-  const { cartItems } = useCart();
+export default function NewarrivalsPage() {
+  const { cartItems, addToCart, removeFromCart } = useCart();
   const [colorFilter, setColorFilter] = useState('');
   const [priceFilter, setPriceFilter] = useState('');
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const filteredProducts = PhonesProducts.filter(product => {
-    if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
-    if (colorFilter && product.color !== colorFilter) return false;
-    if (priceFilter === 'under50' && product.price >= 50) return false;
-    if (priceFilter === '50to200' && (product.price < 50 || product.price > 200)) return false;
-    if (priceFilter === 'over200' && product.price <= 200) return false;
+  const filteredProducts = NewarrivalsProducts.filter(product => {
+    if (colorFilter && !product.colors.includes(colorFilter)) return false;
+    if (priceFilter === 'under200' && product.price >= 200) return false;
+    if (priceFilter === '200to300' && (product.price < 200 || product.price > 300)) return false;
+    if (priceFilter === 'over300' && product.price <= 300) return false;
     return true;
   });
 
   const clearAllFilters = () => {
     setColorFilter('');
     setPriceFilter('');
-    setSearchQuery('');
   };
 
+  const calculateTotalItems = () => cartItems.reduce((total, item) => total + item.quantity, 0);
+
   const priceFilters = [
-    { id: 'under50', label: 'Moins de 50€' },
-    { id: '50to200', label: '50€ - 200€' },
-    { id: 'over200', label: 'Plus de 200€' }
+    { id: 'under200', label: 'Moins de 200€' },
+    { id: '200to300', label: '200€ - 300€' },
+    { id: 'over300', label: 'Plus de 300€' }
   ];
 
+  // Fonction pour vérifier si le produit est déjà dans le panier
+  const isInCart = (id) => cartItems.some(item => item.id === id);
+
   return (
-    
-  <div className="bg-black text-gray-100 min-h-screen">
-   
-     <div className="fixed top-4 right-4 z-50">
-        <CartButton />
-      </div>
-      <NavigBare /> 
-
-       <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-7xl mx-auto px-4 py-8"
-    >
-        {/* En-tête centré */}
-        <div className="mb-8 text-center">
-          <div className="flex items-center text-sm text-gray-400 mb-2 justify-center">
-            <Link href="/products" className="hover:text-white transition-colors">
-              Accueil
-            </Link>
-            <FiChevronRight className="mx-2" />
-            <span>Phones</span>
+    <div className="premium-page">
+      <NavigBare />
+      <div className="premium-cart-fixed">
+        <Link href="/cart" className="premium-cart-link">
+          <div className="relative">
+            <FiShoppingCart className="premium-cart-icon" />
+            {cartItems.length > 0 && (
+              <motion.span 
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="premium-cart-badge"
+              >
+                {calculateTotalItems()}
+              </motion.span>
+            )}
           </div>
-          <h1 className="text-4xl font-bold text-white mb-2 uppercase">Phones</h1>
-        </div>
+        </Link>
+      </div>
 
-        {/* Filtres mobile */}
-        <motion.button
-          whileTap={{ scale: 0.95 }}
-          whileHover={{ scale: 1.02 }}
-          onClick={() => setMobileFiltersOpen(true)}
-          className="lg:hidden flex items-center gap-2 mb-6 px-4 py-3 bg-gray-800 rounded-xl text-white shadow-lg mx-auto"
-        >
-          <FiFilter className="text-white" />
-          <span>Filtres</span>
-        </motion.button>
+      <div className="premium-content-container">
+        <header className="premium-header rounded-xl mb-12 p-8 text-center">
+          <div className="breadcrumb justify-center">
+            <Link href="/products" className="breadcrumb-link">
+              <FiChevronRight className="breadcrumb-arrow" />
+              Retour à l'accueil
+            </Link>
+            <span className="breadcrumb-separator">/</span>
+            <span className="breadcrumb-current">New products</span>
+          </div>
+          <h1 className="premium-title">Our new products</h1>
+          <p className="premium-subtitle">
+           "Discover our new selection for an immersive experience"
+          </p>
+        </header>
 
-        {/* Contenu principal */}
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filtres (sidebar desktop) */}
-          <aside className="hidden lg:block lg:w-80 flex-shrink-0">
-            <div className="bg-gray-800 p-6 rounded-2xl border border-gray-700 sticky top-24 shadow-xl shadow-black/50">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold text-white flex items-center gap-2">
-                  <FiFilter className="text-blue-400" />
+        
+
+        <div className="premium-main-layout">
+          <aside className="premium-filter-sidebar">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`premium-filter-container ${isScrolled ? 'premium-filter-scrolled' : ''}`}
+            >
+              <div className="premium-filter-header">
+                <h2 className="premium-filter-title">
+                  <FiFilter className="premium-filter-icon" />
                   Filtres
                 </h2>
-                {(colorFilter || priceFilter || searchQuery) && (
-                  <button
+                {(colorFilter || priceFilter) && (
+                  <button 
                     onClick={clearAllFilters}
-                    className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                    className="premium-clear-filters"
                   >
-                    <FiX size={16} />
+                    <FiX />
                     Tout effacer
                   </button>
                 )}
               </div>
 
-              {/* Recherche */}
-              <div className="mb-6">
-                <h3 className="text-sm font-medium text-gray-300 mb-4">Recherche</h3>
-                <input
-                  type="text"
-                  className="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-4 text-white"
-                  placeholder="Nom du produit..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-
-              {/* Couleurs */}
-              <div className="mb-6">
-                <h3 className="text-sm font-medium text-gray-300 mb-4">Couleurs</h3>
-                <div className="grid grid-cols-3 gap-3">
+              <div className="premium-filter-section">
+                <h3 className="premium-filter-section-title">
+                  <span className="premium-filter-dot"></span>
+                  Couleurs
+                </h3>
+                <div className="premium-color-grid">
                   {colorOptions.map((color) => (
-                    <button
+                    <motion.button
                       key={color.value}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                       onClick={() => setColorFilter(colorFilter === color.name ? '' : color.name)}
-                      className={`rounded-full w-8 h-8 ${color.bg} border-2 ${color.border} ${
-                        colorFilter === color.name ? 'ring-2 ring-blue-500' : ''
-                      }`}
-                    />
+                      className={`premium-color-option ${colorFilter === color.name ? 'premium-color-selected' : ''}`}
+                    >
+                      <span className={`premium-color-swatch ${color.bg} ${color.border}`} />
+                      <span className="premium-color-name">{color.name}</span>
+                      {colorFilter === color.name && (
+                        <motion.span 
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="premium-color-check"
+                        >
+                          <FiCheck />
+                        </motion.span>
+                      )}
+                    </motion.button>
                   ))}
                 </div>
               </div>
 
-              {/* Prix */}
-              <div>
-                <h3 className="text-sm font-medium text-gray-300 mb-4">Prix</h3>
-                <div className="space-y-2">
-                  {priceFilters.map(({ id, label }) => (
-                    <button
+              <div className="premium-filter-section">
+                <h3 className="premium-filter-section-title">
+                  <span className="premium-filter-dot"></span>
+                  Prix
+                </h3>
+                <div className="premium-price-filters">
+                  {priceFilters.map(({id, label}) => (
+                    <motion.button
                       key={id}
+                      whileHover={{ scale: 1.01 }}
+                      whileTap={{ scale: 0.98 }}
                       onClick={() => setPriceFilter(priceFilter === id ? '' : id)}
-                      className={`w-full text-left px-4 py-2 rounded-lg ${
-                        priceFilter === id
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                      }`}
+                      className={`premium-price-option ${priceFilter === id ? 'premium-price-selected' : ''}`}
                     >
+                      <span className="premium-price-dot"></span>
                       {label}
-                    </button>
+                    </motion.button>
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           </aside>
 
-          {/* Grille produits */}
-          <main className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+          <main className="premium-product-grid-container">
+            <AnimatePresence>
+              {(colorFilter || priceFilter) && (
+                <motion.div 
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  className="premium-mobile-active-filters"
+                >
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {filteredProducts.length > 0 ? (
+              <div className="premium-grid">
+                {filteredProducts.map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="premium-card animate-fadeIn"
+                  >
+                    <div className="premium-card-image-container">
+                      <img src={product.image} alt={product.name} className="premium-card-image" />
+                      {product.priceTag && (
+                        <span className={`premium-badge ${product.priceTag === "Premium" ? 'new-badge' : ''}`}>
+                          {product.priceTag}
+                        </span>
+                      )}
+                    </div>
+                    <div className="premium-card-content">
+                      <h3 className="premium-card-title">{product.name}</h3>
+                      <p className="premium-card-price">{product.price}€</p>
+                      <p className="premium-card-description">{product.description}</p>
+                     
+                      <div className="flex justify-end mt-4">
+                        <button 
+                          onClick={() => {
+                            if (isInCart(product.id)) {
+                              removeFromCart(product.id);
+                            } else {
+                              addToCart(product);
+                            }
+                          }} 
+                          className="premium-add-to-cart-button"
+                        >
+                          {isInCart(product.id) ? 'Retirer du panier' : 'Ajouter au panier'}
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <p className="premium-no-products-found">Aucun produit trouvé pour ces filtres.</p>
+            )}
           </main>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

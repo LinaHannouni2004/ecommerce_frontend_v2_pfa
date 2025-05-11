@@ -9,11 +9,20 @@ function Header() {
 
   const handleNavClick = (navItem) => {
     if (navItem === "Store") {
-      router.push('/aboutus');
+      router.push('/products');
     }
   
+    else if (navItem === "Support") {
+      router.push('/aboutus');
+    }
+    else if (navItem === "Mac" || navItem === "iPhone") {
+      // Scroll to highlights section
+      const highlightsSection = document.getElementById('highlights');
+      if (highlightsSection) {
+        highlightsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
-  
 
   return (
     <header className="bg-black w-full py-5 sm:px-10 px-5 flex justify-between items-center">

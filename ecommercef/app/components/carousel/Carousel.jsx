@@ -4,26 +4,72 @@ import CarouselItem from './CarouselItem'
 
 const Carousel = () => {
   const [showDetail, setShowDetail] = useState(false)
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(2) // Start with center item (position 2)
   const carouselRef = useRef(null)
-  const items = [
-    { id: 1, img: '/images/images_carousel/img1.png' },
-    { id: 2, img: '/images/images_carousel/img2.png' },
-    { id: 3, img: '/images/images_carousel/img3.png' },
-    { id: 4, img: '/images/images_carousel/img4.png' },
-    { id: 5, img: '/images/images_carousel/img5.png' },
-    { id: 6, img: '/images/images_carousel/img6.png' }
+  
+  // Product data with images and information
+  const products = [
+    {
+      id: 'silver-earbuds',
+      img: '/images/images_carousel/img1.png',
+      name: 'Silver Wireless Earbuds',
+      price: 129.99,
+      description: 'Experience crystal-clear sound with these sleek silver wireless earbuds. Perfect for on-the-go listening with premium sound quality.',
+      specs: ['6 hours', 'Type-C', 'All Devices', '5.3', 'IPX4']
+    },
+    {
+      id: 'violet-smartwatch',
+      img: '/images/images_carousel/img2.png',
+      name: 'Violet Smart Watch',
+      price: 199.99,
+      description: 'Stay connected with this stylish violet smartwatch. Track your fitness, receive notifications, and more with this versatile wearable.',
+      specs: ['24 hours', 'Wireless', 'iOS/Android', '5.0', 'IP68']
+    },
+    {
+      id: 'mauve-earbuds',
+      img: '/images/images_carousel/img3.png',
+      name: 'Mauve Wireless Earbuds',
+      price: 119.99,
+      description: 'Unique mauve-colored wireless earbuds with excellent noise isolation and long battery life for uninterrupted listening.',
+      specs: ['8 hours', 'Type-C', 'All Devices', '5.2', 'IPX5']
+    },
+    {
+      id: 'black-earbuds',
+      img: '/images/images_carousel/img4.png',
+      name: 'Black Wireless Earbuds',
+      price: 109.99,
+      description: 'Sleek black wireless earbuds with deep bass response and comfortable fit for all-day wear.',
+      specs: ['7 hours', 'Type-C', 'All Devices', '5.1', 'IPX4']
+    },
+    {
+      id: 'black-headphones',
+      img: '/images/images_carousel/img5.png',
+      name: 'Black Wireless Headphones',
+      price: 179.99,
+      description: 'Premium over-ear wireless headphones in black with active noise cancellation for immersive audio experiences.',
+      specs: ['30 hours', 'Type-C', 'All Devices', '5.0', 'None']
+    },
+    {
+      id: 'white-earbuds',
+      img: '/images/images_carousel/img6.png',
+      name: 'White Wireless Earbuds',
+      price: 99.99,
+      description: 'Classic white wireless earbuds with balanced sound profile and secure fit for active lifestyles.',
+      specs: ['5 hours', 'Type-C', 'All Devices', '5.3', 'IPX4']
+    }
   ]
 
   const showSlider = useCallback((direction) => {
+    if (showDetail) return; // Prevent sliding when detail view is open
+    
     setActiveIndex(prev => {
       if (direction === 'next') {
-        return prev === items.length - 1 ? 0 : prev + 1
+        return prev === products.length ? 1 : prev + 1
       } else {
-        return prev === 0 ? items.length - 1 : prev - 1
+        return prev === 1 ? products.length : prev - 1
       }
     })
-  }, [items.length])
+  }, [products.length, showDetail])
 
   useEffect(() => {
     const carousel = carouselRef.current
@@ -38,6 +84,19 @@ const Carousel = () => {
 
     return () => clearTimeout(timer)
   }, [activeIndex])
+
+  // Close detail view when active index changes
+  useEffect(() => {
+    setShowDetail(false)
+  }, [activeIndex])
+
+  // Calculate visible positions based on activeIndex
+  const getVisiblePositions = () => {
+    return products.map((_, index) => {
+      const position = index - activeIndex + 3; // Center the active item
+      return Math.max(1, Math.min(position, products.length)); // Keep positions between 1-6
+    });
+  };
 
   return (
     <div 
@@ -61,15 +120,19 @@ const Carousel = () => {
           transform: 'translateX(-50%)' 
         }}
       >
-        {items.map((item, index) => (
-          <CarouselItem 
-            key={item.id}
-            img={item.img}
-            position={index - activeIndex + 2}
-            showDetail={showDetail}
-            setShowDetail={setShowDetail}
-          />
-        ))}
+        {products.map((product, index) => {
+          const position = getVisiblePositions()[index];
+          return (
+            <CarouselItem 
+              key={product.id}
+              img={product.img}
+              position={position}
+              productData={product}
+              showDetail={showDetail && position === 2}
+              setShowDetail={setShowDetail}
+            />
+          );
+        })}
       </div>
       
       <div 
@@ -77,7 +140,7 @@ const Carousel = () => {
         style={{ 
           position: 'absolute', 
           bottom: '175px',
-                    width: '1140px', 
+          width: '1140px', 
           maxWidth: '90%', 
           display: 'flex', 
           justifyContent: 'space-between', 
@@ -85,7 +148,6 @@ const Carousel = () => {
           transform: 'translateX(-50%)' 
         }}
       >
-        
         <button 
           id="prev" 
           onClick={() => showSlider('prev')}

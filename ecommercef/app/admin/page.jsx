@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import './AdminPage.css'; // Optional styling
+import './AdminPage.css';
 
 const AdminPage = () => {
-  // State for products
+
   const [products, setProducts] = useState([]);
   
-  // State for form inputs
+  // form inputs
   const [formData, setFormData] = useState({
     id: '',
     name: '',
@@ -16,7 +16,7 @@ const AdminPage = () => {
     imageUrl: ''
   });
   
-  // State for editing mode
+  // State for editing
   const [isEditing, setIsEditing] = useState(false);
 
   // Load products (in a real app, this would be an API call)

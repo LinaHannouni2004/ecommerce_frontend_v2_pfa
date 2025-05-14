@@ -25,26 +25,62 @@ export default function RegisterPage() {
     setFormData(prev => ({ ...prev, userType: type }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+  
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-
+  
     if (formData.password.length < 8) {
       setError('Password must be at least 8 characters');
       return;
     }
-
-    console.log('Registration data:', formData);
-    if (formData.userType === 'admin') {
-      router.push('/admin/dashboard');
-    } else {
-      router.push('/products');
+  
+    if (!formData.userType) {  // Vérification du rôle avant d'envoyer la requête
+      setError('Please select an account type');
+      return;
+    }
+  
+    try {
+      const response = await fetch('http://localhost:8081/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          role: formData.userType.toUpperCase(),  // Assurez-vous d'envoyer la valeur du rôle
+        }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.message || 'Registration failed');
+        return;
+      }
+  
+      const data = await response.json();
+      console.log('Registration success:', data);
+  
+      // Après l'inscription, vous pouvez rediriger l'utilisateur en fonction du rôle
+      if (formData.userType === 'admin') {
+        router.push('/admin');
+      } else {
+        router.push('/products');
+      }
+  
+    } catch (err) {
+      console.error(err);
+      setError('Failed to connect to server');
     }
   };
+  
+  
+  
 
   return (
     <div className={styles.backgroundContainer}>
@@ -124,16 +160,18 @@ export default function RegisterPage() {
   <div className={styles.formGroup}>
               <label className={styles.inputLabel}>Account Type</label>
               <div className={styles.fullWidthRadioGroup}>
-                <label className={`${styles.fullWidthRadioButton} ${formData.userType === 'user' ? styles.radioButtonActive : ''}`}>
+                <label className={`${styles.fullWidthRadioButton} ${formData.userType === 'customer' ? styles.radioButtonActive : ''}`}>
                   <input
                     type="radio"
                     name="userType"
                     value="user"
-                    checked={formData.userType === 'user'}
-                    onChange={() => handleUserTypeChange('user')}
-                    className={styles.radioInput}
+
+
+                    checked={formData.userType === 'customer'}
+                    onChange={() => handleUserTypeChange('customer')}
+                    className={styles.roInput}
                   />
-                  <span className={styles.radioButtonText}>User</span>
+                  <span className={styles.radioButtonText}>Customer</span>
                 </label>
                 <label className={`${styles.fullWidthRadioButton} ${formData.userType === 'admin' ? styles.radioButtonActive : ''}`}>
                   <input

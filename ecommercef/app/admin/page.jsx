@@ -1,8 +1,98 @@
 'use client';
 
+<<<<<<< HEAD
 import React from 'react';
 import Link from 'next/link';
 import './DashboardPage.css';
+=======
+import React, { useState, useEffect } from 'react';
+import './AdminPage.css';
+
+const AdminPage = () => {
+
+  const [products, setProducts] = useState([]);
+  
+  // form inputs
+  const [formData, setFormData] = useState({
+    id: '',
+    name: '',
+    description: '',
+    price: '',
+    imageUrl: ''
+  });
+  
+  // State for editing
+  const [isEditing, setIsEditing] = useState(false);
+
+  // Load products (in a real app, this would be an API call)
+  useEffect(() => {
+    // Mock data - replace with actual API call
+    const mockProducts = [
+      { id: 1, name: 'Product 1', description: 'Description 1', price: 19.99, imageUrl: 'https://via.placeholder.com/150' },
+      { id: 2, name: 'Product 2', description: 'Description 2', price: 29.99, imageUrl: 'https://via.placeholder.com/150' }
+    ];
+    setProducts(mockProducts);
+  }, []);
+
+  // Handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (isEditing) {
+      // Update existing product
+      setProducts(products.map(product => 
+        product.id === formData.id ? formData : product
+      ));
+    } else {
+      // Add new product
+      const newProduct = {
+        ...formData,
+        id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1
+      };
+      setProducts([...products, newProduct]);
+    }
+    
+    // Reset form
+    resetForm();
+  };
+
+  // Edit product
+  const handleEdit = (product) => {
+    setFormData(product);
+    setIsEditing(true);
+  };
+
+  // Delete product
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      setProducts(products.filter(product => product.id !== id));
+      if (isEditing && formData.id === id) {
+        resetForm();
+      }
+    }
+  };
+
+  // Reset form
+  const resetForm = () => {
+    setFormData({
+      id: '',
+      name: '',
+      description: '',
+      price: '',
+      imageUrl: ''
+    });
+    setIsEditing(false);
+  };
+>>>>>>> 369b88163b45ed73152a284ef823e684f4a2ed1e
 
 const DashboardPage = () => {
   return (
@@ -93,4 +183,8 @@ const DashboardPage = () => {
   );
 };
 
+<<<<<<< HEAD
 export default DashboardPage;
+=======
+export default AdminPage;
+>>>>>>> 369b88163b45ed73152a284ef823e684f4a2ed1e

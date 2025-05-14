@@ -16,11 +16,49 @@ export default function LoginPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    router.push('/products');
+  
+    try {
+
+      console.log(formData); // Ajoute ça avant le fetch pour vérifier
+
+      const response = await fetch('http://localhost:8081/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formData),
+         credentials: 'include',
+         mode: 'cors' 
+      });
+      console.log("Réponse brute:", response);
+  
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+  
+      const data = await response.json();
+      console.log('Login successful', data);
+  
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+  
+      // Redirige selon le rôle
+      if (data.user.role === 'ADMIN') {
+        router.push('/admin');
+      } else {
+        router.push('/products');
+      }
+  
+    } catch (error) {
+      console.error('Login error:', error.message);
+      alert("Erreur d'identification");
+    }
   };
+  
+  
 
   return (
     <div className={styles.backgroundContainer}>

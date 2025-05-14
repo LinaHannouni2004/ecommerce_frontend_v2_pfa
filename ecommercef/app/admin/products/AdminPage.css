@@ -1,0 +1,209 @@
+/* Général */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7fc;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* Conteneur principal */
+.admin-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar */
+.admin-navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.admin-navbar ul {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  padding: 0;
+}
+
+.admin-navbar li {
+  margin: 0 15px;
+}
+
+.admin-navbar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.admin-navbar a:hover {
+  color: #00bcd4;
+}
+
+/* Titre de la page */
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Formulaire de gestion des produits */
+.product-form {
+  background-color: #fafafa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.product-form h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.product-form .form-group {
+  margin-bottom: 15px;
+}
+
+.product-form label {
+  font-size: 16px;
+  margin-bottom: 5px;
+  display: block;
+  color: #333;
+}
+
+.product-form input, .product-form select, .product-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #fff;
+}
+
+.product-form input:focus, .product-form select:focus, .product-form textarea:focus {
+  outline: none;
+  border-color: #00bcd4;
+}
+
+.product-form .form-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-form .btn-primary, .product-form .btn-secondary {
+  padding: 10px 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.product-form .btn-primary {
+  background-color: #00bcd4;
+  color: #fff;
+}
+
+.product-form .btn-primary:hover {
+  background-color: #0097a7;
+}
+
+.product-form .btn-secondary {
+  background-color: #ccc;
+  color: #333;
+}
+
+.product-form .btn-secondary:hover {
+  background-color: #999;
+}
+
+/* Liste des produits */
+.product-list {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.product-list th, .product-list td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.product-list th {
+  background-color: #f4f7fc;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.product-list td {
+  font-size: 14px;
+}
+
+.product-list img.product-thumbnail {
+  max-width: 100px;
+  border-radius: 4px;
+}
+
+.product-list button {
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: #f44336;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+.product-list button:hover {
+  background-color: #d32f2f;
+}
+
+.product-list .btn-edit {
+  background-color: #4caf50;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+.product-list .btn-edit:hover {
+  background-color: #388e3c;
+}
+
+/* Table responsive */
+@media (max-width: 768px) {
+  .product-list table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .product-list th, .product-list td {
+    padding: 8px;
+  }
+
+  .product-form .form-group {
+    margin-bottom: 10px;
+  }
+
+  .product-form .btn-primary, .product-form .btn-secondary {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}

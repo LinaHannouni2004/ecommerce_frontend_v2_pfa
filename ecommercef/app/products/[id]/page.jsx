@@ -5,6 +5,9 @@ import "./productpage.css";
 import { useCart } from '../../components/Card_Produit/CartContext';
 import NavigBare from '../../components/NavigBare';
 import CartButton from "../../components/Card_Produit/CartButton";
+import { createReview,getProductReviews
+ } from "../services/reviewService";
+
 
 import { use } from 'react';
 const mockProducts = [
@@ -369,7 +372,9 @@ const getProductDetails = (category) => {
   }
 };
 
-export default function ProductPage({ params }) {
+
+export default function ProductPage({ params: paramsPromise }) {
+  const params = use(paramsPromise);
   const { addToCart } = useCart();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -382,35 +387,70 @@ export default function ProductPage({ params }) {
     comment: ""
   });
   const [quantity, setQuantity] = useState(1);
- 
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     if (!params?.id) return;
 
-    const foundProduct = mockProducts.find(p => p.id.toString() === params.id);
-    setProduct(foundProduct);
-    
-    const productReviews = sampleReviews.filter(r => r.productId.toString() === params.id);
-    setReviews(productReviews);
-    
-    if (foundProduct?.sizes) {
-      setSelectedSize(foundProduct.sizes[0]);
-    }
-    
-    setLoading(false);
+    const fetchData = async () => {
+      try {
+        const foundProduct = mockProducts.find(p => p.id.toString() === params.id);
+        if (!foundProduct) {
+          throw new Error("Produit non trouvé");
+        }
+        
+        setProduct(foundProduct);
+        
+        try {
+          const reviewsData = await getProductReviews(params.id);
+          setReviews(reviewsData);
+        } catch (err) {
+          console.error("Erreur chargement avis:", err);
+          setReviews([]); // Utiliser un tableau vide si erreur de chargement
+        }
+        
+        if (foundProduct?.sizes) {
+          setSelectedSize(foundProduct.sizes[0]);
+        }
+      } catch (err) {
+        console.error("Erreur:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, [params]);
 
-  const handleReviewSubmit = (e) => {
+  const handleReviewSubmit = async (e) => {
     e.preventDefault();
-    const reviewToAdd = {
-      id: Date.now(),
-      productId: params.id,
-      name: newReview.name || "Anonymous",
-      rating: newReview.rating,
-      comment: newReview.comment,
-      date: new Date().toLocaleDateString()
-    };
-    setReviews([reviewToAdd, ...reviews]);
-    setNewReview({ name: "", rating: 5, comment: "" });
+    setError(null);
+
+    try {
+      if (!newReview.comment.trim()) {
+        throw new Error("Le commentaire ne peut pas être vide");
+      }
+
+      const reviewPayload = {
+        productId: parseInt(params.id),
+        userId: user?.id || 1,
+        name: newReview.name || "Anonymous",
+        rating: newReview.rating,
+        comment: newReview.comment
+      };
+
+      const savedReview = await createReview(reviewPayload);
+      setReviews([{
+        ...savedReview,
+        date: new Date().toLocaleDateString()
+      }, ...reviews]);
+      setNewReview({ name: "", rating: 5, comment: "" });
+    } catch (err) {
+      console.error("Erreur soumission avis:", err);
+      setError(err.message || "Erreur lors de la soumission");
+    }
   };
 
   const handleQuantityChange = (newQuantity) => {
@@ -420,11 +460,31 @@ export default function ProductPage({ params }) {
   };
 
   if (loading) {
-    return <div className="loading-container">Loading...</div>;
+    return <div className="loading-container">Chargement...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <p>Erreur: {error}</p>
+        <button 
+          onClick={() => {
+            setError(null);
+            setLoading(true);
+            // Recharger les données
+            const foundProduct = mockProducts.find(p => p.id.toString() === params.id);
+            setProduct(foundProduct);
+            setLoading(false);
+          }}
+        >
+          Réessayer
+        </button>
+      </div>
+    );
   }
 
   if (!product) {
-    return <div className="error-container">Product not found</div>;
+    return <div className="error-container">Produit non trouvé</div>;
   }
 
   const productDetails = getProductDetails(product.category);

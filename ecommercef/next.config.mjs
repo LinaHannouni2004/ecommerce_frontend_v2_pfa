@@ -2,6 +2,12 @@
 const nextConfig = {
     images: {
         remotePatterns: [{
+                protocol: 'http',
+                hostname: 'localhost',
+                port: '8081',
+                pathname: '/**',
+            },
+            {
                 protocol: 'https',
                 hostname: 'i.pinimg.com',
             },
@@ -13,8 +19,12 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: '*.pinimg.com',
             },
+            {
+                protocol: 'https',
+                hostname: 'encrypted-tbn2.gstatic.com',
+            },
         ],
     },
 };
 
-export default nextConfig;
+export default nextConfig; // syntaxe ES module

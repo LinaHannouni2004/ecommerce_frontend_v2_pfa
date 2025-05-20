@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FiMenu, FiSearch, FiBell, FiMessageSquare } from 'react-icons/fi';
-import { BsGraphUp, BsPeople, BsBoxSeam, BsChatDots, BsCart } from 'react-icons/bs';
+import { BsGraphUp, BsPeople, BsBoxSeam, BsChatDots } from 'react-icons/bs';
 import './CommentPage.css';
 
 const CommentsPage = () => {
@@ -10,14 +10,33 @@ const CommentsPage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activePage, setActivePage] = useState('comments');
 
-  useEffect(() => {
-    const mockComments = [
-      { id: 1, user: 'Alice', content: 'Super produit, merci !', date: '2024-04-01', status: 'approved' },
-      { id: 2, user: 'Bob', content: 'Livraison rapide et produit conforme.', date: '2024-04-05', status: 'pending' },
-      { id: 3, user: 'Charlie', content: 'Très satisfait de mon achat.', date: '2024-04-08', status: 'rejected' },
-    ];
-    setComments(mockComments);
-  }, []);
+useEffect(() => {
+  fetch("http://localhost:8081/api/reviews")
+    .then((res) => {
+      if (!res.ok) {
+        return res.json().then(err => { 
+          throw new Error(err.message || 'Failed to fetch reviews');
+        });
+      }
+      return res.json();
+    })
+    .then((data) => {
+      console.log("Reviews received:", data);
+      const formattedComments = data.map(review => ({
+        id: review.id,
+        user: review.userName || "Anonymous",
+        content: review.comment,
+        date: review.createdAt?.split("T")[0] ?? '',
+        status: review.status?.toLowerCase() || 'pending'
+      }));
+      setComments(formattedComments);
+    })
+    .catch((err) => {
+      console.error("Error loading comments:", err);
+      // You might want to set some error state here
+    });
+}, []);
+
 
   // Navigation items
   const navItems = [
@@ -34,7 +53,7 @@ const CommentsPage = () => {
   };
 
   const handleStatusChange = (id, newStatus) => {
-    setComments(comments.map(comment => 
+    setComments(comments.map(comment =>
       comment.id === id ? { ...comment, status: newStatus } : comment
     ));
   };
@@ -45,8 +64,8 @@ const CommentsPage = () => {
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           {sidebarOpen && <h1 className="logo">AdminPro</h1>}
-          <button 
-            onClick={() => setSidebarOpen(!sidebarOpen)} 
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
             className="menu-toggle"
             aria-label="Toggle menu"
           >
@@ -132,12 +151,13 @@ const CommentsPage = () => {
                           className="status-select"
                         >
                           <option value="pending">En attente</option>
-                          <option value="approved">Approuvé</option>
-                          <option value="rejected">Rejeté</option>
+                          <option value="positive">Positif</option>
+                          <option value="neutral">Neutre</option>
+                          <option value="negative">Négatif</option>
                         </select>
                       </td>
                       <td>
-                        <button 
+                        <button
                           onClick={() => handleDelete(comment.id)}
                           className="btn-delete"
                         >

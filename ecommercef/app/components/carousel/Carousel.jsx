@@ -9,14 +9,7 @@ const Carousel = () => {
   
   // Product data with images and information
   const products = [
-    {
-      id: 'silver-earbuds',
-      img: '/images/images_carousel/img1.png',
-      name: 'Silver Wireless Earbuds',
-      price: 129.99,
-      description: 'Experience crystal-clear sound with these sleek silver wireless earbuds. Perfect for on-the-go listening with premium sound quality.',
-      specs: ['6 hours', 'Type-C', 'All Devices', '5.3', 'IPX4']
-    },
+    
     {
       id: 'violet-smartwatch',
       img: '/images/images_carousel/img2.png',
@@ -56,11 +49,19 @@ const Carousel = () => {
       price: 99.99,
       description: 'Classic white wireless earbuds with balanced sound profile and secure fit for active lifestyles.',
       specs: ['5 hours', 'Type-C', 'All Devices', '5.3', 'IPX4']
+    },
+    {
+      id: 'silver-earbuds',
+      img: '/images/images_carousel/img1.png',
+      name: 'Silver Wireless Earbuds',
+      price: 129.99,
+      description: 'Experience crystal-clear sound with these sleek silver wireless earbuds. Perfect for on-the-go listening with premium sound quality.',
+      specs: ['6 hours', 'Type-C', 'All Devices', '5.3', 'IPX4']
     }
   ]
 
   const showSlider = useCallback((direction) => {
-    if (showDetail) return; // Prevent sliding when detail view is open
+    if (showDetail) return; 
     
     setActiveIndex(prev => {
       if (direction === 'next') {

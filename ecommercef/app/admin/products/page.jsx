@@ -22,6 +22,7 @@ const AdminPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
+    specification:'',
     price: '',
     imageUrl: '',
     stockQuantity: 0,
@@ -60,42 +61,52 @@ const AdminPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('http://localhost:8081/api/products', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          description: formData.description,
-          price: formData.price,
-          imageUrl: formData.imageUrl,
-          stockQuantity: formData.stockQuantity,
-          categoryId: parseInt(formData.categoryId),
-        }),
-      });
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-      const data = await response.json();
-      if (response.ok) {
-        if (isEditing) {
-          setProducts(products.map(p => (p.id === data.id ? data : p)));
-        } else {
-          setProducts([...products, data]);
-        }
-        resetForm();
+  const method = isEditing ? 'PUT' : 'POST';
+  const url = isEditing
+    ? `http://localhost:8081/api/products/${formData.id}`
+    : 'http://localhost:8081/api/products';
+
+  try {
+    const response = await fetch(url, {
+      method: method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: formData.name,
+        description: formData.description,
+        specification: formData.specification,
+        price: formData.price,
+        imageUrl: formData.imageUrl,
+        stockQuantity: formData.stockQuantity,
+        categoryId: parseInt(formData.categoryId),
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      if (isEditing) {
+        setProducts(products.map(p => (p.id === formData.id ? data : p)));
       } else {
-        console.error('Error saving product:', data);
+        setProducts([...products, data]);
       }
-    } catch (error) {
-      console.error('Error saving product:', error);
+      resetForm();
+    } else {
+      console.error('Erreur lors de l\'enregistrement :', data);
     }
-  };
+  } catch (error) {
+    console.error('Erreur lors de la requête :', error);
+  }
+};
+
 
   const resetForm = () => {
     setFormData({
       name: '',
       description: '',
+      specification:'',
       price: '',
       imageUrl: '',
       stockQuantity: 0,
@@ -188,6 +199,8 @@ const AdminPage = () => {
              <div className="form-grid single-column">
   <input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="Nom" required />
   <textarea name="description" value={formData.description} onChange={handleInputChange} placeholder="Description" required />
+    <textarea name="specification" value={formData.specification} onChange={handleInputChange} placeholder="Specification" required />
+
   <input type="number" name="price" value={formData.price} onChange={handleInputChange} placeholder="Prix" step="0.01" required />
   <input type="text" name="imageUrl" value={formData.imageUrl} onChange={handleInputChange} placeholder="Image URL" required />
   <input type="number" name="stockQuantity" value={formData.stockQuantity} onChange={handleInputChange} placeholder="Quantité en stock" required />
@@ -216,6 +229,7 @@ const AdminPage = () => {
                   <tr>
                     <th>Nom</th>
                     <th>Description</th>
+                    <th>Specification</th>
                     <th>Prix</th>
                     <th>Image</th>
                     <th>Catégorie</th>
@@ -229,6 +243,7 @@ const AdminPage = () => {
                       <tr key={product.id}>
                         <td>{product.name}</td>
                         <td>{product.description}</td>
+                        <td>{product.specification}</td>
                         <td>${product.price}</td>
                         <td><img src={product.imageUrl} alt={product.name} className="product-thumbnail" /></td>
                         <td>{category ? category.name : 'N/A'}</td>

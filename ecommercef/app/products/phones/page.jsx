@@ -7,7 +7,7 @@ import { FiChevronRight, FiX, FiFilter, FiCheck, FiShoppingCart, FiSearch } from
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../../components/Card_Produit/CartContext';
 import CartButton from "../../components/Card_Produit/CartButton";
-//import "../../products/filterstyle.css";
+import "../../products/filterstyle.css";
 const PhonesProducts = [
   
   {

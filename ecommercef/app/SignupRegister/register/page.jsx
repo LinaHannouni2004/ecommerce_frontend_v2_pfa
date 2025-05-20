@@ -95,7 +95,9 @@ export default function RegisterPage() {
       
       <div className={styles.loginContainer}>
         <div className={styles.loginCard}>
-          <h1 className={styles.loginTitle}>Register</h1>
+          <h1 className={styles.loginTitle}
+          style={{color:'#4f46e5'}}
+          >Register</h1>
           
           {error && (
             <div className={styles.errorMessage}>
@@ -104,8 +106,10 @@ export default function RegisterPage() {
           )}
 
           <form onSubmit={handleSubmit} className={styles.loginForm}>
-            <div className={styles.formGroup}>
-              <label htmlFor="name" className={styles.inputLabel}>Full Name</label>
+            <div className={styles.formGroup} style={{ color: '#FFFFFF' }}>
+              <label htmlFor="name" className={styles.inputLabel}
+              style={{color:'#4f46e5'}}
+              >Full Name</label>
               <input
                 type="text"
                 id="name"
@@ -118,7 +122,9 @@ export default function RegisterPage() {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="email" className={styles.inputLabel}>Email</label>
+              <label htmlFor="email" className={styles.inputLabel}
+              style={{color:'#4f46e5'}}
+              >Email</label>
               <input
                 type="email"
                 id="email"
@@ -131,7 +137,9 @@ export default function RegisterPage() {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="password" className={styles.inputLabel}>Password</label>
+              <label htmlFor="password" className={styles.inputLabel}
+              style={{color:'#4f46e5'}}
+              >Password</label>
               <input
                 type="password"
                 id="password"
@@ -145,7 +153,9 @@ export default function RegisterPage() {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="confirmPassword" className={styles.inputLabel}>Confirm Password</label>
+              <label htmlFor="confirmPassword" className={styles.inputLabel}
+              style={{color:'#4f46e5'}}
+              >Confirm Password</label>
               <input
                 type="password"
                 id="confirmPassword"
@@ -158,7 +168,9 @@ export default function RegisterPage() {
               />
             </div>
   <div className={styles.formGroup}>
-              <label className={styles.inputLabel}>Account Type</label>
+              <label className={styles.inputLabel}
+              style={{color:'#4f46e5'}}
+              >Account Type</label>
               <div className={styles.fullWidthRadioGroup}>
                 <label className={`${styles.fullWidthRadioButton} ${formData.userType === 'customer' ? styles.radioButtonActive : ''}`}>
                   <input
@@ -192,12 +204,15 @@ export default function RegisterPage() {
             </button>
           </form>
 
-          <div className={styles.registerPrompt}>
+          <div className={styles.registerPrompt}
+          style={{color:'black'}}
+          >
             Already have an account?{' '}
             <button 
               type="button"
               onClick={() => router.push('/SignupRegister/signup')}
               className={styles.registerLink}
+              style={{color:'#6366f1'}}
             >
               Login
             </button>

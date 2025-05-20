@@ -82,7 +82,9 @@ export default function LoginPage() {
           
           <form onSubmit={handleSubmit} className={styles.loginForm}>
             <div className={styles.formGroup}>
-              <label htmlFor="email" className={styles.inputLabel}>Email</label>
+              <label htmlFor="email" className={styles.inputLabel}
+               style={{color:'#4f46e5'}}
+              >Email</label>
               <input
                 type="email"
                 id="email"
@@ -95,7 +97,9 @@ export default function LoginPage() {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="password" className={styles.inputLabel}>Password</label>
+              <label htmlFor="password" className={styles.inputLabel}
+               style={{color:'#4f46e5'}}
+              >Password</label>
               <input
                 type="password"
                 id="password"
@@ -112,10 +116,13 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div className={styles.forgotPassword}>
+          <div className={styles.forgotPassword}
+           style={{color:'#4f46e5'}}
+          >
             <button 
               onClick={() => router.push('/SignupRegister/forgotpassword')}
               className={styles.forgotPasswordLink}
+               style={{color:'#4f46e5'}}
             >
               Forgot Password?
             </button>

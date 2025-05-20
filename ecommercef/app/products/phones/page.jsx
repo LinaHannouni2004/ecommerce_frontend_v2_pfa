@@ -7,6 +7,7 @@ import { FiChevronRight, FiX, FiFilter, FiCheck, FiShoppingCart, FiSearch } from
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../../components/Card_Produit/CartContext';
 import CartButton from "../../components/Card_Produit/CartButton";
+//import "../../products/filterstyle.css";
 const PhonesProducts = [
   
   {
@@ -298,7 +299,7 @@ export default function PhonesPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const filteredProducts = PhonesProducts.filter(product => {
+  const filteredProducts = Phonesroducts.filter(product => {
     if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
     if (colorFilter && product.color !== colorFilter) return false;
     if (priceFilter === 'under50' && product.price >= 50) return false;
@@ -318,22 +319,19 @@ export default function PhonesPage() {
     { id: '50to200', label: '50€ - 200€' },
     { id: 'over200', label: 'Plus de 200€' }
   ];
-
-  return (
-    
-  <div className="bg-black text-gray-100 min-h-screen">
-   
-     <div className="fixed top-4 right-4 z-50">
+return (
+    <div className="bg-black text-gray-100 min-h-screen">
+      <div className="fixed top-4 right-4 z-50">
         <CartButton />
       </div>
-      <NavigBare /> 
+      <NavigBare />
 
-       <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-7xl mx-auto px-4 py-8"
-    >
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-7xl mx-auto px-4 py-8"
+      >
         {/* En-tête centré */}
         <div className="mb-8 text-center">
           <div className="flex items-center text-sm text-gray-400 mb-2 justify-center">
@@ -346,31 +344,24 @@ export default function PhonesPage() {
           <h1 className="text-4xl font-bold text-white mb-2 uppercase">Phones</h1>
         </div>
 
-        {/* Filtres mobile */}
-        <motion.button
-          whileTap={{ scale: 0.95 }}
-          whileHover={{ scale: 1.02 }}
-          onClick={() => setMobileFiltersOpen(true)}
-          className="lg:hidden flex items-center gap-2 mb-6 px-4 py-3 bg-gray-800 rounded-xl text-white shadow-lg mx-auto"
-        >
-          <FiFilter className="text-white" />
-          <span>Filtres</span>
-        </motion.button>
-
         {/* Contenu principal */}
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filtres (sidebar desktop) */}
+          {/* Filtres (sidebar desktop) - Version premium */}
           <aside className="hidden lg:block lg:w-80 flex-shrink-0">
-            <div className="bg-gray-800 p-6 rounded-2xl border border-gray-700 sticky top-24 shadow-xl shadow-black/50">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold text-white flex items-center gap-2">
-                  <FiFilter className="text-blue-400" />
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="premium-filter-container"
+            >
+              <div className="premium-filter-header">
+                <h2 className="premium-filter-title">
+                  <FiFilter className="premium-filter-icon" />
                   Filtres
                 </h2>
                 {(colorFilter || priceFilter || searchQuery) && (
                   <button
                     onClick={clearAllFilters}
-                    className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                    className="premium-clear-filters"
                   >
                     <FiX size={16} />
                     Tout effacer
@@ -379,11 +370,14 @@ export default function PhonesPage() {
               </div>
 
               {/* Recherche */}
-              <div className="mb-6">
-                <h3 className="text-sm font-medium text-gray-300 mb-4">Recherche</h3>
+              <div className="premium-filter-section">
+                <h3 className="premium-filter-section-title">
+                  <span className="premium-filter-dot"></span>
+                  Recherche
+                </h3>
                 <input
                   type="text"
-                  className="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-4 text-white"
+                  className="premium-search-input"
                   placeholder="Nom du produit..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -391,41 +385,58 @@ export default function PhonesPage() {
               </div>
 
               {/* Couleurs */}
-              <div className="mb-6">
-                <h3 className="text-sm font-medium text-gray-300 mb-4">Couleurs</h3>
-                <div className="grid grid-cols-3 gap-3">
+              <div className="premium-filter-section">
+                <h3 className="premium-filter-section-title">
+                  <span className="premium-filter-dot"></span>
+                  Couleurs
+                </h3>
+                <div className="premium-color-grid">
                   {colorOptions.map((color) => (
-                    <button
+                    <motion.button
                       key={color.value}
-                      onClick={() => setColorFilter(colorFilter === color.name ? '' : color.name)}
-                      className={`rounded-full w-8 h-8 ${color.bg} border-2 ${color.border} ${
-                        colorFilter === color.name ? 'ring-2 ring-blue-500' : ''
-                      }`}
-                    />
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setColorFilter(colorFilter === color.value ? '' : color.value)}
+                      className={`premium-color-option ${colorFilter === color.value ? 'premium-color-selected' : ''}`}
+                    >
+                      <span className={`premium-color-swatch ${color.bg} ${color.border}`} />
+                      <span className="premium-color-name">{color.name}</span>
+                      {colorFilter === color.value && (
+                        <motion.span 
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="premium-color-check"
+                        >
+                          <FiCheck size={12} />
+                        </motion.span>
+                      )}
+                    </motion.button>
                   ))}
                 </div>
               </div>
 
               {/* Prix */}
-              <div>
-                <h3 className="text-sm font-medium text-gray-300 mb-4">Prix</h3>
-                <div className="space-y-2">
+              <div className="premium-filter-section">
+                <h3 className="premium-filter-section-title">
+                  <span className="premium-filter-dot"></span>
+                  Prix
+                </h3>
+                <div className="premium-price-filters">
                   {priceFilters.map(({ id, label }) => (
-                    <button
+                    <motion.button
                       key={id}
+                      whileHover={{ scale: 1.01 }}
+                      whileTap={{ scale: 0.98 }}
                       onClick={() => setPriceFilter(priceFilter === id ? '' : id)}
-                      className={`w-full text-left px-4 py-2 rounded-lg ${
-                        priceFilter === id
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                      }`}
+                      className={`premium-price-option ${priceFilter === id ? 'premium-price-selected' : ''}`}
                     >
+                      <span className="premium-price-dot"></span>
                       {label}
-                    </button>
+                    </motion.button>
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           </aside>
 
           {/* Grille produits */}

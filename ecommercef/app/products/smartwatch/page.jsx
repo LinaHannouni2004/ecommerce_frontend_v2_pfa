@@ -7,7 +7,7 @@ import { FiChevronRight, FiX, FiFilter, FiCheck, FiShoppingCart, FiSearch } from
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../../components/Card_Produit/CartContext';
 import CartButton from "../../components/Card_Produit/CartButton";
-
+import "../../products/filterstyle.css";
 const colorOptions = [
   { name: "Noir", value: "black", bg: "bg-gray-900", border: "border-gray-700", text: "text-gray-900" },
   { name: "Argent", value: "silver", bg: "bg-gray-300", border: "border-gray-400", text: "text-gray-700" },
@@ -114,66 +114,98 @@ export default function SmartwatchePage() {
         </motion.button>
 
         <div className="flex flex-col lg:flex-row gap-8">
-          <aside className="hidden lg:block lg:w-80 flex-shrink-0">
-            <div className="bg-gray-800 p-6 rounded-2xl border border-gray-700 sticky top-24 shadow-xl shadow-black/50">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold text-white flex items-center gap-2">
-                  <FiFilter className="text-blue-400" />
-                  Filtres
-                </h2>
-                {(colorFilter || priceFilter || searchQuery) && (
-                  <button
-                    onClick={clearAllFilters}
-                    className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1"
+        <aside className="hidden lg:block lg:w-80 flex-shrink-0">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="premium-filter-container" // Classe CSS ajoutée
+          >
+            <div className="premium-filter-header">
+              <h2 className="premium-filter-title">
+                <FiFilter className="premium-filter-icon" />
+                Filtres
+              </h2>
+              {(colorFilter || priceFilter || searchQuery) && (
+                <button
+                  onClick={clearAllFilters}
+                  className="premium-clear-filters"
+                >
+                  <FiX size={16} />
+                  Tout effacer
+                </button>
+              )}
+            </div>
+
+            {/* Recherche */}
+            <div className="premium-filter-section">
+              <h3 className="premium-filter-section-title">
+                <span className="premium-filter-dot"></span>
+                Recherche
+              </h3>
+              <input
+                type="text"
+                className="premium-search-input"
+                placeholder="Nom du produit..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+
+            {/* Couleurs */}
+            <div className="premium-filter-section">
+              <h3 className="premium-filter-section-title">
+                <span className="premium-filter-dot"></span>
+                Couleurs
+              </h3>
+              <div className="premium-color-grid">
+                {colorOptions.map((color) => (
+                  <motion.button
+                    key={color.value}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setColorFilter(colorFilter === color.value ? '' : color.value)}
+                    className={`premium-color-option ${colorFilter === color.value ? 'premium-color-selected' : ''}`}
+                    title={color.name}
                   >
-                    <FiX size={16} />
-                    Tout effacer
-                  </button>
-                )}
-              </div>
-
-              <div className="mb-6">
-                <h3 className="text-sm font-medium text-gray-300 mb-4">Recherche</h3>
-                <input
-                  type="text"
-                  className="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-4 text-white"
-                  placeholder="Nom du produit..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-
-              <div className="mb-6">
-                <h3 className="text-sm font-medium text-gray-300 mb-4">Couleurs</h3>
-                <div className="grid grid-cols-3 gap-3">
-                  {colorOptions.map((color) => (
-                    <button
-                      key={color.value}
-                      onClick={() => setColorFilter(colorFilter === color.name ? '' : color.name)}
-                      className={`rounded-full w-8 h-8 ${color.bg} border-2 ${color.border} ${colorFilter === color.name ? 'ring-2 ring-blue-500' : ''}`}
-                      title={color.name}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium text-gray-300 mb-4">Prix</h3>
-                <div className="space-y-2">
-                  {priceFilters.map(({ id, label }) => (
-                    <button
-                      key={id}
-                      onClick={() => setPriceFilter(priceFilter === id ? '' : id)}
-                      className={`w-full text-left px-4 py-2 rounded-lg ${priceFilter === id ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}`}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
+                    <span className={`premium-color-swatch ${color.bg} ${color.border}`} />
+                    <span className="premium-color-name">{color.name}</span>
+                    {colorFilter === color.value && (
+                      <motion.span 
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        className="premium-color-check"
+                      >
+                        <FiCheck size={12} />
+                      </motion.span>
+                    )}
+                  </motion.button>
+                ))}
               </div>
             </div>
-          </aside>
 
+            {/* Prix */}
+            <div className="premium-filter-section">
+              <h3 className="premium-filter-section-title">
+                <span className="premium-filter-dot"></span>
+                Prix
+              </h3>
+              <div className="premium-price-filters">
+                {priceFilters.map(({ id, label }) => (
+                  <motion.button
+                    key={id}
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setPriceFilter(priceFilter === id ? '' : id)}
+                    className={`premium-price-option ${priceFilter === id ? 'premium-price-selected' : ''}`}
+                  >
+                    <span className="premium-price-dot"></span>
+                    {label}
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </aside>
           <main className="flex-1">
             {filteredProducts.length === 0 ? (
               <div className="text-center py-12">
